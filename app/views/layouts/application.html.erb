@@ -1,0 +1,20 @@
+<html>
+  <head>
+  		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<%= ext_stylesheet_tags %>
+		<%= ext_javascript_tags %>
+		<%= ext_bloney_infra_javascript_tags %>
+		<%= ext_bloney_dashboard_javascript_tags %>
+		<%= ext_bloney_application_javascript_tags%>	
+  </head>
+  <body>
+  		<div id="bloney_header"></div>
+		<div id="bloney_contex">
+			<div id="tabs_toolbar"></div>
+			<div id="bloney_tab_scripts">
+				 <%= render :partial=>"layouts/#{controller.sub_layout}" %>
+			</div>
+			<div id="notification"></div>
+		</div>
+  </body>
+</html>

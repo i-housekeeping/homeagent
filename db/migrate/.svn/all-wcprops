@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/222/bloney/trunk/db/migrate
+END
+005_create_helps.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/11/bloney/trunk/db/migrate/005_create_helps.rb
+END
+025_create_process_errors.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/219/bloney/trunk/db/migrate/025_create_process_errors.rb
+END
+018_create_notifications.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/46/bloney/trunk/db/migrate/018_create_notifications.rb
+END
+002_add_password_reset_code.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/11/bloney/trunk/db/migrate/002_add_password_reset_code.rb
+END
+007_create_accounts.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/46/bloney/trunk/db/migrate/007_create_accounts.rb
+END
+010_create_categories.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/222/bloney/trunk/db/migrate/010_create_categories.rb
+END
+019_create_schedullers.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/46/bloney/trunk/db/migrate/019_create_schedullers.rb
+END
+003_add_acl.rb
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/!svn/ver/11/bloney/trunk/db/migrate/003_add_acl.rb
+END
+016_create_alert_objects.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/46/bloney/trunk/db/migrate/016_create_alert_objects.rb
+END
+024_create_expressions.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/219/bloney/trunk/db/migrate/024_create_expressions.rb
+END
+022_create_workitems.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/219/bloney/trunk/db/migrate/022_create_workitems.rb
+END
+021_create_tasks.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/46/bloney/trunk/db/migrate/021_create_tasks.rb
+END
+020_create_triggers.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/46/bloney/trunk/db/migrate/020_create_triggers.rb
+END
+004_create_roles.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/66/bloney/trunk/db/migrate/004_create_roles.rb
+END
+011_create_stories.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/63/bloney/trunk/db/migrate/011_create_stories.rb
+END
+008_create_customers.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/46/bloney/trunk/db/migrate/008_create_customers.rb
+END
+015_create_alert_actions.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/46/bloney/trunk/db/migrate/015_create_alert_actions.rb
+END
+013_create_alerts.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/202/bloney/trunk/db/migrate/013_create_alerts.rb
+END
+012_create_alert_types.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/46/bloney/trunk/db/migrate/012_create_alert_types.rb
+END
+001_create_users.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/11/bloney/trunk/db/migrate/001_create_users.rb
+END
+006_create_banks.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/83/bloney/trunk/db/migrate/006_create_banks.rb
+END
+014_create_alert_conditions.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/204/bloney/trunk/db/migrate/014_create_alert_conditions.rb
+END
+017_create_reports.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/46/bloney/trunk/db/migrate/017_create_reports.rb
+END
+023_create_history.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/219/bloney/trunk/db/migrate/023_create_history.rb
+END
+009_create_cashrecords.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/161/bloney/trunk/db/migrate/009_create_cashrecords.rb
+END

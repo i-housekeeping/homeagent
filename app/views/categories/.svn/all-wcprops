@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/!svn/ver/75/bloney/trunk/app/views/categories
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/46/bloney/trunk/app/views/categories/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/46/bloney/trunk/app/views/categories/index.html.erb
+END
+stories.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/62/bloney/trunk/app/views/categories/stories.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/46/bloney/trunk/app/views/categories/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/46/bloney/trunk/app/views/categories/show.html.erb
+END
+wizard.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/75/bloney/trunk/app/views/categories/wizard.html.erb
+END

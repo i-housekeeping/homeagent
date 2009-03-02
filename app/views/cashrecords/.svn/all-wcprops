@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/!svn/ver/168/bloney/trunk/app/views/cashrecords
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/46/bloney/trunk/app/views/cashrecords/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/46/bloney/trunk/app/views/cashrecords/index.html.erb
+END
+stories.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/!svn/ver/168/bloney/trunk/app/views/cashrecords/stories.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/46/bloney/trunk/app/views/cashrecords/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/46/bloney/trunk/app/views/cashrecords/show.html.erb
+END

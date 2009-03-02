@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/!svn/ver/202/bloney/trunk/db/initializers
+END
+categories.yml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/57/bloney/trunk/db/initializers/categories.yml
+END
+alerts.yml
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/!svn/ver/202/bloney/trunk/db/initializers/alerts.yml
+END
+helps.yml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/!svn/ver/88/bloney/trunk/db/initializers/helps.yml
+END

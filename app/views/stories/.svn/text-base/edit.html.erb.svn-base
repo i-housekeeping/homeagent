@@ -1,0 +1,12 @@
+<h1>Editing story</h1>
+
+<%= error_messages_for :story %>
+
+<% form_for(@story) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @story %> |
+<%= link_to 'Back', stories_path %>

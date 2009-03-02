@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/!svn/ver/75/bloney/trunk/app/views/user_notifier
+END
+signup_notification.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/60/bloney/trunk/app/views/user_notifier/signup_notification.rhtml
+END
+activation.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/60/bloney/trunk/app/views/user_notifier/activation.rhtml
+END
+forgot_password.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/11/bloney/trunk/app/views/user_notifier/forgot_password.rhtml
+END
+reset_password.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/11/bloney/trunk/app/views/user_notifier/reset_password.rhtml
+END
+customeremail.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/75/bloney/trunk/app/views/user_notifier/customeremail.rhtml
+END

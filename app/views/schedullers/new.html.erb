@@ -1,0 +1,11 @@
+<h1>New scheduller</h1>
+
+<%= error_messages_for :scheduller %>
+
+<% form_for(@scheduller) do |f| %>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', schedullers_path %>

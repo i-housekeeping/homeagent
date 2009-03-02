@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/!svn/ver/75/bloney/trunk/app/views/notifications
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/46/bloney/trunk/app/views/notifications/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/75/bloney/trunk/app/views/notifications/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/46/bloney/trunk/app/views/notifications/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/75/bloney/trunk/app/views/notifications/show.html.erb
+END

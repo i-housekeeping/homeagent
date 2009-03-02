@@ -1,0 +1,131 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+aroot_aroot:
+  text: 'Cash Categories'
+  description: 'Cash Categories'
+aroot_child1:
+  text: 'CashIn'
+  description: 'CashIn'
+child1_child11:
+  text: 'Cash Sales'
+  description: 'Cash Sales'
+child1_child12:
+  text: 'Collections from Accounts Receivables'
+  description: 'Collections from Accounts Receivables'
+child1_child13:
+  text: 'Equity Received'
+  description: 'Equity Received'
+child1_child14:
+  text: 'Loans Received'
+  description: 'Loans Received'
+child1_child15:
+  text: 'Receipts'
+  description: 'Receipts'
+child1_child16:
+  text: 'Interest'
+  description: 'Interest'
+child1_child16:
+  text: 'Royalties'
+  description: 'Royalties'
+child1_child17:
+  text: 'Other'
+  description: 'Other'
+aroot_child2:
+  text: 'CashOut'
+  description: 'CashOut'
+child2_child21:
+  text: 'Inventory Expenditures'
+  description: 'Inventory Expenditures'
+child21_child211:
+  text: 'Inventory/Raw Material (cash)'
+  description: 'Inventory/Raw Material (cash)'
+child21_child212:
+  text: 'Inventory/Raw Material (paid on account)'
+  description: 'Inventory/Raw Material (paid on account)'
+child21_child213:
+  text: 'Production Expenses'
+  description: 'Production Expenses'
+child2_child22:
+  text: 'Operating Expenses'
+  description: 'Operating Expenses'
+child22_child221:
+  text: 'Advertising'
+  description: 'Advertising'
+child22_child222:
+  text: 'Bank Charges'
+  description: 'Bank Charges'
+child22_child223:
+  text: 'Dues & Subscriptions'
+  description: 'Dues & Subscriptions'
+child22_child224:
+  text: 'Insurance'
+  description: 'Insurance'
+child22_child225:
+  text: 'Licenses & Fees'
+  description: 'Licenses & Fees'
+child22_child226:
+  text: 'Marketing & Promotion'
+  description: 'Marketing & Promotion'
+child22_child227:
+  text: 'Meals & Entertainment'
+  description: 'Meals & Entertainment'
+child22_child228:
+  text: 'Miscellaneous'
+  description: 'Miscellaneous'
+child22_child229:
+  text: 'Office Expense'
+  description: 'Office Expense'
+child22_child2210:
+  text: 'Office Supplies'
+  description: 'Office Supplies'
+child22_child2211:
+  text: 'Outside Services'
+  description: 'Outside Services'
+child22_child2212:
+  text: 'Payroll Expenses'
+  description: 'Payroll Expenses'
+child2212_child22121:
+  text: 'Salaries & Wages'
+  description: 'Salaries & Wages'
+child2212_child22122:
+  text: 'Payroll Taxes'
+  description: 'Payroll Taxes'
+child2212_child22123:
+  text: 'Benefits'
+  description: 'Benefits'
+child22_child2213:
+  text: 'Professional Fees'
+  description: 'Professional Fees'
+child22_child2214:
+  text: 'Property Taxes'
+  description: 'Property Taxes'
+child22_child2215:
+  text: 'Rent'
+  description: 'Rent'
+child22_child2216:
+  text: 'Repairs & Maintenance'
+  description: 'Repairs & Maintenance'
+child22_child2217:
+  text: 'Shipping & Delivery'
+  description: 'Shipping & Delivery'
+child22_child2218:
+  text: 'Telephone'
+  description: 'Telephone'
+child22_child2219:
+  text: 'Training & Development'
+  description: 'Training & Development'
+child22_child2220:
+  text: 'Travel'
+  description: 'Travel'
+child22_child2221:
+  text: 'Utilities'
+  description: 'Utilities'
+child22_child2222:
+  text: 'Vehicle'
+  description: 'Vehicle'
+child2_child23:
+  text: 'Leased Equipment'
+  description: 'Leased Equipment'
+child2_child24:
+  text: 'Other'
+  description: 'Other'
+  

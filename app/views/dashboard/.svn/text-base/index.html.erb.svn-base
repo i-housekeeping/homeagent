@@ -1,0 +1,3 @@
+<%@tabs_list.each do |item| %>
+	<%= tag("div",{:id=> item.to_s }) %>
+<%end%>

@@ -1,0 +1,67 @@
+8
+
+dir
+234
+https://svn.blogtery.com/bloney/trunk/vendor/plugins/acts_as_authenticated
+https://svn.blogtery.com
+
+
+
+2008-05-03T19:05:54.745378Z
+11
+blogtery
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+0f487d20-f0ce-4637-b5a7-ad0e7398a073
+
+CHANGELOG
+file
+
+
+
+
+2009-02-05T08:21:24.453125Z
+0e41062b3301764ff1fc4788641a55ba
+2008-05-03T19:05:54.745378Z
+11
+blogtery
+
+install.rb
+file
+
+
+
+
+2009-02-05T08:21:24.453125Z
+3773dce53854a282602d79a631a1ff8a
+2008-05-03T19:05:54.745378Z
+11
+blogtery
+
+generators
+dir
+
+README
+file
+
+
+
+
+2009-02-05T08:21:24.453125Z
+9f435c717b47f4fb80c3b5ef659c9302
+2008-05-03T19:05:54.745378Z
+11
+blogtery
+

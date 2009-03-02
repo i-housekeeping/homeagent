@@ -1,0 +1,18 @@
+guest:
+  id: 1
+  title: 'guest'
+  domain: 'company'
+  description: 'guest'
+  domain_description: 'dashboard,cashflow,banking,collaborate'
+admin:
+  id: 2
+  title: 'admin'
+  domain: 'company'
+  description: 'admin'
+  domain_description: 'dashboard,cashflow,banking,collaborate'
+moderator:
+  id: 3
+  title: 'moderator'
+  domain: 'expert'
+  description: 'moderator'
+  domain_description: 'dashboard,collaborate'

@@ -1,0 +1,18 @@
+<h1>Listing alerts</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for alert in @alerts %>
+  <tr>
+    <td><%= link_to 'Show', alert %></td>
+    <td><%= link_to 'Edit', edit_alert_path(alert) %></td>
+    <td><%= link_to 'Destroy', alert, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New alert', new_alert_path %>

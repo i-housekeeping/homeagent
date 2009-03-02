@@ -1,0 +1,35 @@
+one:
+  id: 1
+  bank_id: 1
+  customer_id: 1
+  account_no: '26476432-8347'
+  account_type: 'GLA'
+  currency: 'BLN'
+  balance: 1000.00
+  balance_date: '2008-05-30'
+  credit_limit: 0.00
+  last_update: 2008-05-27 16:03:18
+
+two:
+  id: 2
+  bank_id: 1
+  customer_id: 1
+  account_no: '31451432-8347'
+  account_type: 'GLA'
+  currency: 'BLN'
+  balance: 3000.00
+  balance_date: '2008-05-30'
+  credit_limit: 0.00
+  last_update: 2008-05-27 16:03:18
+  
+three:
+  id: 3
+  bank_id: 1
+  customer_id: 1
+  account_no: '45456432-8347'
+  account_type: 'LOAN'
+  currency: 'BLN'
+  balance: 451000.00
+  balance_date: '2008-05-30'
+  credit_limit: 0.00
+  last_update: 2008-05-27 16:03:18

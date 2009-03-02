@@ -1,0 +1,15 @@
+class CreateAlertActions < ActiveRecord::Migration
+  def self.up
+    create_table :alert_actions do |t|
+    t.string    "name",          :limit => 45
+    t.string    "description"
+    t.integer   "action_id",     :limit => 10
+    t.integer   "priority",      :limit => 10
+    t.string    "record_status", :limit => 4,  :default => "ACTV"
+    t.timestamp "last_update"
+    end
+end
+  def self.down
+    drop_table :alert_actions
+  end
+end

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/!svn/ver/228/bloney/trunk/app/views/dashboard
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/228/bloney/trunk/app/views/dashboard/index.html.erb
+END
+company_balance.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/68/bloney/trunk/app/views/dashboard/company_balance.html.erb
+END
+company_account.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/71/bloney/trunk/app/views/dashboard/company_account.html.erb
+END
+expert_account.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/71/bloney/trunk/app/views/dashboard/expert_account.html.erb
+END

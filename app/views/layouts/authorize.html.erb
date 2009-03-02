@@ -1,0 +1,14 @@
+<html>
+  <head>
+  		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<%= ext_javascript_tags %>
+		<%= ext_stylesheet_tags %>
+		<%= ext_bloney_infra_javascript_tags%>
+		<%= ext_bloney_authorize_javascript_tags%>
+  </head>
+  <body>
+  		<div id="bloney_authorize" style="visibility: hidden;">
+			<%= yield %>	
+		</div>
+  </body>
+</html>

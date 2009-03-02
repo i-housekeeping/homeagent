@@ -1,0 +1,22 @@
+</br><div id="compbalance_title"><b><%=@comapny.customer_name%></b> company Ltd.</div></br>	
+<div id="compbalance_table">
+	<table>
+	<caption> Accounts cash flow activities.</caption>
+	<tr>
+		<th class = "statement"></th>
+		<th class = "yesterday">Yesterday</th>
+		<th class = "today">Today</th>
+		<th class = "tommorow">Tommorow</th>
+	</tr>
+	<% @company_balance.in_groups_of(1) do |row| %>
+	<tr> 
+		<% row.each do |data| %>
+			<td class = "statement"><%= data[:statement] unless data.nil? %></td>
+			<td class = "yesterday"><%= data[:yesterday_balance] unless data.nil? %></td>
+			<td class = "today"><%= data[:today_balance] unless data.nil? %></td>
+			<td class = "tommorow"><%= data[:tommorow_balance] unless data.nil? %></td>
+		<% end %>
+	</tr> 
+	<% end %>
+	</table>
+</div></br>

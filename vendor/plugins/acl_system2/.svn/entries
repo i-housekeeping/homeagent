@@ -1,0 +1,70 @@
+8
+
+dir
+234
+https://svn.blogtery.com/bloney/trunk/vendor/plugins/acl_system2
+https://svn.blogtery.com
+
+
+
+2008-05-03T19:05:54.745378Z
+11
+blogtery
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+0f487d20-f0ce-4637-b5a7-ad0e7398a073
+
+test
+dir
+
+LICENSE.txt
+file
+
+
+
+
+2009-02-05T08:21:33.531250Z
+fa0d023e204bae3fe2a97c47c8a91cd3
+2008-05-03T19:05:54.745378Z
+11
+blogtery
+
+init.rb
+file
+
+
+
+
+2009-02-05T08:21:33.531250Z
+2566f1a0727baa1295e1f99f72b05fa1
+2008-05-03T19:05:54.745378Z
+11
+blogtery
+
+lib
+dir
+
+README
+file
+
+
+
+
+2009-02-05T08:21:33.531250Z
+e9de5aa448c1e0a770507912bab22431
+2008-05-03T19:05:54.745378Z
+11
+blogtery
+

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/11/bloney/trunk/vendor/plugins/acl_system2/lib/caboose
+END
+role_handler.rb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/11/bloney/trunk/vendor/plugins/acl_system2/lib/caboose/role_handler.rb
+END
+access_control.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/11/bloney/trunk/vendor/plugins/acl_system2/lib/caboose/access_control.rb
+END
+logic_parser.rb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/11/bloney/trunk/vendor/plugins/acl_system2/lib/caboose/logic_parser.rb
+END

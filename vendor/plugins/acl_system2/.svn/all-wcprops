@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/!svn/ver/11/bloney/trunk/vendor/plugins/acl_system2
+END
+LICENSE.txt
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/11/bloney/trunk/vendor/plugins/acl_system2/LICENSE.txt
+END
+init.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/11/bloney/trunk/vendor/plugins/acl_system2/init.rb
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/11/bloney/trunk/vendor/plugins/acl_system2/README
+END

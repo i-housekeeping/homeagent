@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/!svn/ver/52/bloney/trunk/app/views/authorize
+END
+welcome.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/11/bloney/trunk/app/views/authorize/welcome.rhtml
+END
+activate.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/11/bloney/trunk/app/views/authorize/activate.rhtml
+END
+forgot_password.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/11/bloney/trunk/app/views/authorize/forgot_password.rhtml
+END
+reset_password.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/11/bloney/trunk/app/views/authorize/reset_password.rhtml
+END
+roles.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/52/bloney/trunk/app/views/authorize/roles.rhtml
+END
+signup.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/11/bloney/trunk/app/views/authorize/signup.rhtml
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/11/bloney/trunk/app/views/authorize/index.rhtml
+END
+login.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/11/bloney/trunk/app/views/authorize/login.rhtml
+END

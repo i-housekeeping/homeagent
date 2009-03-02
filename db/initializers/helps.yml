@@ -1,0 +1,186 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+aroot_aroot:
+  text: 'Welcome'
+  description: 'Welcome'
+  link: 'welcome'
+  content: 'Welcome'
+aroot_child1:
+  text: 'Overview'
+  description: 'Overview'
+  link: 'overview'
+  content: 'Overview'
+aroot_child2:
+  text: 'Authorize'
+  description: 'Authorize'
+  link: 'authorize'
+  content: 'Authorize'
+child2_child21:
+  text: 'Login'
+  description: 'Login'
+  link: 'login'
+  content: 'Login'
+child2_child22:
+  text: 'Signup'
+  description: 'Signup'
+  link: 'signup'
+  content: 'Signup'
+child2_child23:
+  text: 'Forget Password'
+  description: 'Forget Password'
+  link: 'forgetpassword'
+  content: 'Forget Password'
+aroot_child3:
+  text: 'People'
+  description: 'People'
+  link: 'people'
+  content: 'people'
+child3_child31:
+  text: 'Users'
+  description: 'Users'
+  link: 'users'
+  content: 'users'
+child3_child32:
+  text: 'Search'
+  description: 'Search'
+  link: 'search'
+  content: 'search'
+aroot_child4:
+  text: 'Account'
+  description: 'Account'
+  link: 'account'
+  content: 'account'
+child4_child41:
+  text: 'Banks'
+  description: 'Banks'
+  link: 'banks'
+  content: 'banks'
+child4_child42:
+  text: 'Virtual Account'
+  description: 'Virtual Account'
+  link: 'virtualaccount'
+  content: 'virtualaccount'
+child4_child43:
+  text: 'Search'
+  description: 'Search'
+  link: 'search'
+  content: 'search'
+aroot_child5:
+  text: 'Company'
+  description: 'Company'
+  link: 'company'
+  content: 'company'
+child5_child51:
+  text: 'Customer Type'
+  description: 'Customer Type'
+  link: 'customertype'
+  content: 'customertype'
+child5_child52:
+  text: 'Search'
+  description: 'Search'
+  link: 'search'
+  content: 'search'
+aroot_child6:
+  text: 'Dashboard'
+  description: 'Dashboard'
+  link: 'dashboard'
+  content: 'dashboard' 
+child6_child61:
+  text: 'User Settings'
+  description: 'User Settings'
+  link: 'usersettings'
+  content: 'usersettings' 
+child6_child62:
+  text: 'Bloney Account'
+  description: 'Bloney Account'
+  link: 'bloneyaccount'
+  content: 'bloneyaccount'
+child6_child63:
+  text: 'Bloney Portal'
+  description: 'Bloney Portal'
+  link: 'bloneyportal'
+  content: 'bloneyportal'  
+aroot_child7:
+  text: 'Cashflow'
+  description: 'Cashflow'
+  link: 'cashflow'
+  content: 'cashflow'
+child7_child71:
+  text: 'Shortcuts'
+  description: 'Shortcuts'
+  link: 'shortcuts'
+  content: 'shortcuts'
+child7_child72:
+  text: 'Cashrecords'
+  description: 'Cashrecords'
+  link: 'cashrecords'
+  content: 'cashrecords'
+child7_child73:
+  text: 'Histories'
+  description: 'Histories'
+  link: 'histories'
+  content: 'histories'
+child7_child74:
+  text: 'My Histories'
+  description: 'My Histories'
+  link: 'myhistories'
+  content: 'myhistories'
+aroot_child8:
+  text: 'Banking'
+  description: 'Banking'
+  link: 'banking'
+  content: 'banking'
+child8_child81:
+  text: 'Bank'
+  description: 'Bank'
+  link: 'bank'
+  content: 'bank'
+child8_child82:
+  text: 'Cashrecords Adjustement'
+  description: 'Cashrecords Adjustement'
+  link: 'cashrecordsadjustement'
+  content: 'cashrecordsadjustement'
+aroot_child9:
+  text: 'Collaborate'
+  description: 'Collaborate'
+  link: 'collaborate'
+  content: 'collaborate'
+child9_child91:
+  text: 'Experts'
+  description: 'Experts'
+  link: 'experts'
+  content: 'experts'
+child9_child92:
+  text: 'Comapnies'
+  description: 'Comapnies'
+  link: 'comapnies'
+  content: 'comapnies'
+child9_child93:
+  text: 'Experts Details'
+  description: 'Experts Details'
+  link: 'expertsdetails'
+  content: 'expertsdetails'
+child9_child94:
+  text: 'Experts Forum'
+  description: 'Experts Forum'
+  link: 'expertsforum'
+  content: 'expertsforum'
+aroot_child10:
+  text: 'Notifications'
+  description: 'Notifications'
+  link: 'notifications'
+  content: 'notifications'
+child10_child101:
+  text: 'Timeout'
+  description: 'Timeout'
+  link: 'timeout'
+  content: 'timeout'
+child10_child102:
+  text: 'Filter'
+  description: 'Filter'
+  link: 'filter'
+  content: 'filter'
+child10_child102:
+  text: 'Post Notification'
+  description: 'Post Notification'
+  link: 'postnotification'
+  content: 'postnotification'

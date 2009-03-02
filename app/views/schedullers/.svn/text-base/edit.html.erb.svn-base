@@ -1,0 +1,12 @@
+<h1>Editing scheduller</h1>
+
+<%= error_messages_for :scheduller %>
+
+<% form_for(@scheduller) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @scheduller %> |
+<%= link_to 'Back', schedullers_path %>
