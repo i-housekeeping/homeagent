@@ -5,7 +5,7 @@ module Rails
       conf = YAML::load(ERB.new(IO.read(database_configuration_file)).result)
       if defined?(TAR2RUBYSCRIPT)
         conf.each do |k, v|
-          if v["adapter"] =~ /^sqlite/
+          if v["adapter"] =~ /^sqlite3/
             v["database"] = oldlocation(v["database"]) if v.include?("database")
             v["dbfile"]   = oldlocation(v["dbfile"])   if v.include?("dbfile")
           end

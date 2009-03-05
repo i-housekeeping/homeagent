@@ -31,5 +31,5 @@ when /win/
 end
 
 #webrick.start
-
+#load "mongrel_rails service::install -N HomeAgent -c #{RAILS_ROOT} -p 3000 -e development"
 load "script/server"
