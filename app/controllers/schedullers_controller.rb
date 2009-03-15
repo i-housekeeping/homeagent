@@ -1,13 +1,13 @@
-require 'atom/feed'
-require 'rubygems'
-require 'rufus/scheduler'
+#require 'atom/feed'
+#require 'rubygems'
+#require 'rufus/scheduler'
 
-class PicSelectionProcess < OpenWFE::ProcessDefinition
+#class PicSelectionProcess < OpenWFE::ProcessDefinition
  
-  sequence do
-     alpha
-  end
-end
+#  sequence do
+#     alpha
+#  end
+#end
 
 
 
@@ -15,14 +15,14 @@ class SchedullersController < ApplicationController
   # GET /schedullers
   # GET /schedullers.xml
   def index
-    @s = Rufus::Scheduler.start_new  
+#    @s = Rufus::Scheduler.start_new  
   
-    @s.every "1m", :timeout => "1m" do  
-      puts "Test ..."
-      @s.stop
-    end
+#    @s.every "1m", :timeout => "1m" do  
+#      puts "Test ..."
+#      @s.stop
+#    end
     
-    @schedullers = Scheduller.find(:all)
+#    @schedullers = Scheduller.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -105,17 +105,17 @@ class SchedullersController < ApplicationController
     end
   end
   
-  def workflow
+#  def workflow
     
-    ruote_engine.register_participant("alpha", :position => :first) do
-      puts "first !"
-    end
+#    ruote_engine.register_participant("alpha", :position => :first) do
+#      puts "first !"
+#    end
     
-    li = OpenWFE::LaunchItem.new(PicSelectionProcess)
+#    li = OpenWFE::LaunchItem.new(PicSelectionProcess)
     #li.tags = [ 'lamp', 'fish' ]
      
-    fei = ruote_engine.launch(li)
+#    fei = ruote_engine.launch(li)
     #ruote_engine.wait_for(fei)
-  end
+#  end
   
 end

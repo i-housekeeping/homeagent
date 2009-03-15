@@ -1,11 +1,12 @@
 class CreateTasks < ActiveRecord::Migration
   def self.up
     create_table :tasks do |t|
-      t.string    "name",           :limit => 45
-      t.string    "description"
-      t.integer   "scheduller_id",:limit => 10
-      t.string    "url",            :limit => 45
-      t.string    "interface_name", :limit => 45
+      t.string    "taskId",         :limit => 10
+      t.string    "title",          :limit => 45
+      t.string    "category",       :limit => 25
+      t.text      "description"
+      t.datetime  "dueDate"
+      t.boolean   "completed"
       t.string    "record_sts",     :limit => 4,  :default => "ACTV"
       t.timestamp "last_update"
     end

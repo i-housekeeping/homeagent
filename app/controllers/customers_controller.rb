@@ -38,8 +38,10 @@ class CustomersController < ApplicationController
     logger.warn "Test"
     
     
-   
-   customers_list = @customers.map {|customer| {
+   customers_hash = Hash.new()
+   customers_list = @customers.map {|customer| 
+               customers_hash[customer.id] = 
+                {
                 :id => customer.id,
                 :authenticity_token => customer.authenticity_token,
                 :customer_name => customer.customer_name,
@@ -57,7 +59,9 @@ class CustomersController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @customers }
       format.json { render :json => @customers}
-      format.js { render :js => "#{params[:callback]}(#{customers_list.to_json()});"}
+      format.js { render :js => "#{params[:callback]}(#{customers_list.to_json()});" }
+      format.chr { render :chr => customers_hash }
+      format.jsonc { render :jsonc => customers_list }
     end
   end
   

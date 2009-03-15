@@ -1,8 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :tasks
+  map.resources :tasks, :collection => {:update_remote=>:get,
+                                        :destroy_remote=>:get }
 
-  map.resources :schedullers , :has_many => [:triggers, :tasks],
-                         :collection => {:workflow=>:get}
+  map.resources :schedullers , :has_many => :triggers ,
+                               :collection => {:workflow=>:get}
   map.resources :notifications
 
   map.resources :reports

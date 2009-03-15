@@ -1,28 +1,28 @@
-include Ruleby
+#include Ruleby
 
-class Message
-  def initialize(status,message)
-    @status = status
-    @message = message
-  end
-  attr :status, true
-  attr :message, true
-end
+#class Message
+#  def initialize(status,message)
+#    @status = status
+#    @message = message
+#  end
+#  attr :status, true
+#  attr :message, true
+#end
  
-class HelloWorldRulebook < Rulebook
-  def rules
-    rule [Message, :m, m.status == :HELLO] do |v|
-      puts v[:m].message
-      v[:m].message = "Goodbye world"
-      v[:m].status = :GODBYE
-      modify v[:m]
-    end
-    
-    rule [Message, :m, m.status == :GOODBYE] do |v| 
-      puts v[:m].message 
-    end       
-  end
-end
+#class HelloWorldRulebook < Rulebook
+#  def rules
+#    rule [Message, :m, m.status == :HELLO] do |v|
+#      puts v[:m].message
+#      v[:m].message = "Goodbye world"
+#      v[:m].status = :GODBYE
+#      modify v[:m]
+#    end
+#   
+#    rule [Message, :m, m.status == :GOODBYE] do |v| 
+#      puts v[:m].message 
+#   end       
+#  end
+#end
 
 
 class AlertsController < ApplicationController
@@ -49,11 +49,11 @@ class AlertsController < ApplicationController
   # GET /alerts/1.xml
   def show
     
-    engine :engine do |e|
-      HelloWorldRulebook.new(e).rules
-      e.assert Message.new(:HELLO, 'Hello World')
-      e.match
-    end
+   # engine :engine do |e|
+   #   HelloWorldRulebook.new(e).rules
+   #   e.assert Message.new(:HELLO, 'Hello World')
+   #   e.match
+   # end
     
     
     @alert = Alert.find(params[:id])
