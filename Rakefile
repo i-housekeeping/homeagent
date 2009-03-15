@@ -32,11 +32,12 @@ task :default => [:create_setup]
 
 namespace :homeagent do
  
-  desc "Create setup.exe"
+  desc "Create homeagent.exe and move to i-housekeeping"
   task :create_setup => [:move_exe, :modify_icon, :edit_readme] do
       #puts "Creating setup.exe"
       Dir.chdir(INSTALL_FOLDER)
       system(NSIS, NSIS_FILE)
+      mv("homeagentsetup.exe", "../i-housekeeping/lib/install/homeagentsetup.exe")
   end
   
   
