@@ -1,6 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :tasklists, :collection => {:wizard=>:get}
+
   map.resources :tasks, :collection => {:update_remote=>:get,
-                                        :destroy_remote=>:get }
+                                        :destroy_remote=>:get,
+                                        :create_remote=>:get}
 
   map.resources :schedullers , :has_many => :triggers ,
                                :collection => {:workflow=>:get}
