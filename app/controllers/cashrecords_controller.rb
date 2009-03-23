@@ -54,7 +54,7 @@ class CashrecordsController < ApplicationController
           
         if @cashrecord.save  
           update_current_balance params
-          Story.new().create_cashstory(@cashrecord, current_user)
+          Note.new().create_cashstory(@cashrecord, current_user)
         end
     end
    

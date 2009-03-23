@@ -1,0 +1,18 @@
+<h1>Listing collaborates</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for collaborate in @collaborates %>
+  <tr>
+    <td><%= link_to 'Show', collaborate %></td>
+    <td><%= link_to 'Edit', edit_collaborate_path(collaborate) %></td>
+    <td><%= link_to 'Destroy', collaborate, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New collaborate', new_collaborate_path %>

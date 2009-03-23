@@ -1,23 +1,23 @@
 --- 
 tasks_001: 
   completed: f
-  reminder: 
+  reminder: ""
   last_update: 
   title: Welcome
-  dueDate: 04-21-2009 21:23:14
-  completedDate: 
+  dueDate: 04-21-2009 00:00:00
+  completedDate: ""
   taskId: "1"
   record_sts: ACTV
   id: "1"
   description: You are welcome on the board
 tasks_002: 
   completed: f
-  reminder: 
+  reminder: ""
   last_update: 
-  title: Have a nice time
-  dueDate: 11-12-2009 23:12:12
-  completedDate: 
+  title: Have a nice time here
+  dueDate: 11-12-2009 00:00:00
+  completedDate: ""
   taskId: "2"
   record_sts: ACTV
   id: "2"
-  description: 
+  description: Opa

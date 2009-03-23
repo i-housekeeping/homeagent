@@ -1,36 +1,12 @@
-
-
 class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.xml
   def index
-    if params[:tasklist_id].nil? 
-      @tasks = Task.find(:all) 
-    else
-      @tasks = Tasklist.find(params[:tasklist_id]).tasks 
-    end
- 
-   @tasks_hash = Hash.new
-   task_list = @tasks.map {|task| 
-                 {
-                  :taskId => task.id,
-                  :title => task.title,
-                  :description => task.description,
-                  :dueDate => task.dueDate, 
-                  :completed => task.completed,
-                  :reminder => task.reminder,
-                  :completedDate => task.completedDate
-                 }
-          }
-    @tasks_hash[:Tasks] = task_list   
-    @tasks_hash[:Total] = task_list.size
-    logger.warn "Tasks in json : #{@tasks_hash.to_json}" 
+    @tasks = Task.find(:all) 
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @tasks }
-      format.js { render :js => "#{params[:callback]}(#{task_list.to_json()});" }
-      format.chr {render :chr=>@tasks_hash}
-      format.jsonc {render :jsonc=>@tasks_hash}
     end
   end
 
@@ -78,25 +54,6 @@ class TasksController < ApplicationController
     end
   end
   
-  
-  def create_remote
-    task = ActiveSupport::JSON.decode(params[:task])
-    @task = Task.new(task)
-
-    respond_to do |format|
-      if @task.save
-        flash[:notice] = 'Task was successfully created.'
-        format.html { redirect_to(@task) }
-        format.xml  { render :xml => @task, :status => :created, :location => @task }
-        format.js { render :js => "#{params[:callback]}({success : true});" }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
-        format.js { render :js => "#{params[:callback]}({success : false});" }
-      end
-    end
-  end
-  
   # PUT /tasks/1
   # PUT /tasks/1.xml
   def update
@@ -114,24 +71,6 @@ class TasksController < ApplicationController
     end
   end
 
-  def update_remote
-    task = ActiveSupport::JSON.decode(params[:task])
-    @task = Task.find(task.id)
-
-    respond_to do |format|
-      if @task.update_attributes(task)
-        flash[:notice] = 'Task was successfully updated.'
-        format.html { redirect_to(@task) }
-        format.xml  { head :ok }
-        format.js { render :js => "#{params[:callback]}({success : true});" }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
-        format.js { render :js => "#{params[:callback]}({success : false});" }
-      end
-    end
-  end
-
   # DELETE /tasks/1
   # DELETE /tasks/1.xml
   def destroy
@@ -144,14 +83,100 @@ class TasksController < ApplicationController
     end
   end
   
-  def destroy_remote
-    @task = Task.find(:first , :conditions=>"taskId = '#{params[:id]}'")
-    @task.destroy
+  # instance methods for cross-domain remote calls
+  # GET /tasks/index_remote
+  def index_remote
+   
+    if params[:tasklist_id].nil? 
+      @tasks = Task.find(:all) 
+    else
+      @tasks = Tasklist.find(params[:tasklist_id]).tasks 
+    end
+ 
+   @tasks_hash = Hash.new
+   task_list = @tasks.map {|task| 
+                 {
+                  :taskId => task.taskId,
+                  :title => task.title,
+                  :description => task.description,
+                  :dueDate => task.dueDate, 
+                  :completed => task.completed,
+                  :reminder => task.reminder,
+                  :completedDate => task.completedDate,
+                  :listId =>task.tasklists.id.to_s
+                 }
+          }
+    @tasks_hash[:Tasks] = task_list   
+    @tasks_hash[:Total] = task_list.size
 
     respond_to do |format|
-      format.html { redirect_to(tasks_url) }
-      format.xml  { head :ok }
-      format.js { render :js => "#{params[:callback]}({success : true});" }
+      format.js { render :js => "#{params[:callback]}(#{task_list.to_json()});" }
+      format.chr {render :chr=>@tasks_hash}
+      format.jsonc {render :jsonc=>@tasks_hash}
+    end
+  end
+  
+  # GET /tasks/create_remote
+  def create_remote
+    @reply_remote = Hash.new()
+    
+    unless params[:task].nil?
+        task = ActiveSupport::JSON.decode(params[:task]).rehash
+        logger.warn "decoded task from client#{task["dueDate"]}"
+        task.delete("listId")
+        @task = Task.new(task)
+        @task.save 
+        @reply_remote[:success]= true
+        @reply_remote[:notice] = 'Task was successfully created.'
+    else
+       @reply_remote[:success]= false
+    end
+    
+    respond_to do |format|
+        format.js { render :js => "#{params[:callback]}(#{@reply_remote.to_json});" }
+        format.chr {render :chr=> @reply_remote }
+        format.jsonc { render :jsonc=> @reply_remote  }
+    end
+  end
+  
+  # GET /tasks/update_remote/1
+  def update_remote
+    @reply_remote = Hash.new()
+    
+    unless params[:task].nil?
+      task = ActiveSupport::JSON.decode(params[:task]).rehash
+      task.delete("listId")
+      @task = Task.find(:first , :conditions=>"taskId = '#{task["taskId"]}'")
+      @task.update_attributes(task)
+      @reply_remote[:success]= true
+      @reply_remote[:notice] = 'Task was successfully updated.'
+   else
+       @reply_remote[:success]= false
+   end
+ 
+    respond_to do |format|
+        format.js { render :js => "#{params[:callback]}(#{@reply_remote.to_json});" }
+        format.chr {render :chr=> @reply_remote }
+        format.jsonc { render :jsonc=> @reply_remote  }
+    end
+  end
+  
+  # GET /tasks/destroy_remote/1
+  def destroy_remote
+    @task = Task.find(:first , :conditions=>"taskId = '#{params[:id]}'")
+    @reply_remote = Hash.new()
+    
+    unless @task.nil?
+       @task.destroy
+       @reply_remote[:success]= true
+    else
+       @reply_remote[:success]= false
+    end
+   
+    respond_to do |format|
+      format.js { render :js => "#{params[:callback]}(#{@reply_remote.to_json});" }
+      format.chr {render :chr=> @reply_remote}
+      format.jsonc { render :jsonc=> @reply_remote  }
     end
   end
 end

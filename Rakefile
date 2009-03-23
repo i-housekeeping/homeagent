@@ -18,7 +18,7 @@ INSTALL_FOLDER = File.expand_path('../myhomeagent')
 NSIS = "C:/Program Files/NSIS/makensis.exe"
 RESHACKER = "C:/workspace/ResHack/ResHacker.exe"
 NSIS_FILE = "#{INSTALL_FOLDER}/homeagent.nsi"
-README_FILE = "#{INSTALL_FOLDER}/releasenotes.txt"
+README_FILE = "#{INSTALL_FOLDER}/RELEASENOTES"
 
 # extract values from main.rb file:
 #main_rb = open('../homeagent.rb').read

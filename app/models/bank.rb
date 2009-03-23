@@ -1,4 +1,5 @@
 class Bank < ActiveRecord::Base
-  has_many :accounts
-  has_many :stories, :as=>:storiable
+  has_and_belongs_to_many  :accounts
+  has_many :cashrecords, :through=>:accounts
+  has_many :contacts, :through=>:accounts
 end

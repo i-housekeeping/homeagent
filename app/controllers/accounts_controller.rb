@@ -100,7 +100,7 @@ class AccountsController < ApplicationController
     
     respond_to do |format|
       if @account.save
-        Story.new().create_story(@account, current_user)
+        Note.new().create_story(@account, current_user)
         format.html { 
           render :text=>"{success:true,
                           notice:'Account #{params[:account][:account_no]} was successfully created.'}", :layout=>false
@@ -121,7 +121,7 @@ class AccountsController < ApplicationController
     
     respond_to do |format|
       if @account.update_attributes(params[:account])
-        Story.new().update_story(@account, current_user,params[:story])
+        Note.new().update_story(@account, current_user,params[:story])
         format.html { 
           render :text=>"{success:true,
                           notice:'Account #{params[:account][:account_no]} was successfully updated.'}", :layout=>false
@@ -139,7 +139,7 @@ class AccountsController < ApplicationController
   def destroy
     @account = Account.find(params[:account_id])
     @account.destroy
-    Story.new().delete_story(@account, current_user)
+    Note.new().delete_story(@account, current_user)
     
     respond_to do |format|
       format.html {  

@@ -1,6 +1,7 @@
 class Tasklist < ActiveRecord::Base
   has_and_belongs_to_many :tasks
   belongs_to :user
+  has_many :notes, :as=>:notable
   
   acts_as_nested_set :scope => "record_sts='ACTV'"
   

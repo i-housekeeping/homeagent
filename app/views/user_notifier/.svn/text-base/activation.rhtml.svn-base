@@ -1,3 +1,0 @@
-<%= @user.login %>, your account has been activated.  You can now start to use the Bloney Cashflow.
-
-  <%= @url %>

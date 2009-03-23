@@ -1,8 +1,7 @@
 class CreateAccounts < ActiveRecord::Migration
   def self.up
     create_table :accounts do |t|
-    t.integer   "bank_id",      :limit => 10
-    t.integer   "customer_id",  :limit => 10
+    t.integer   "contact_id",  :limit => 10
     t.string    "account_no",   :limit => 45
     t.string    "account_type", :limit => 20
     t.string    "currency",     :limit => 3

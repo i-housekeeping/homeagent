@@ -1,7 +1,66 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
+--- 
+tasklists_001: 
+  last_update: 
+  updated_at: 2009-03-23 16:07:19
+  text: To-do List
+  lft: "1"
+  record_sts: ACTV
+  id: "7"
+  description: To-do List
+  fprint: 
+  user_id: "3"
+  parent_id: 
+  rgt: "10"
+  created_at: 2009-03-23 16:07:18
+tasklists_002: 
+  last_update: 
+  updated_at: 2009-03-23 16:07:19
+  text: Family
+  lft: "2"
+  record_sts: ACTV
+  id: "8"
+  description: Family
+  fprint: 
+  user_id: "3"
+  parent_id: "7"
+  rgt: "7"
+  created_at: 2009-03-23 16:07:18
+tasklists_003: 
+  last_update: 
+  updated_at: 2009-03-23 16:07:19
+  text: Supermarket
+  lft: "3"
+  record_sts: ACTV
+  id: "9"
+  description: Supermarket
+  fprint: 
+  user_id: "3"
+  parent_id: "8"
+  rgt: "4"
+  created_at: 2009-03-23 16:07:19
+tasklists_004: 
+  last_update: 
+  updated_at: 2009-03-23 16:07:19
+  text: Buy TV
+  lft: "5"
+  record_sts: ACTV
+  id: "10"
+  description: Buy TV
+  fprint: 
+  user_id: "3"
+  parent_id: "8"
+  rgt: "6"
+  created_at: 2009-03-23 16:07:19
+tasklists_005: 
+  last_update: 
+  updated_at: 2009-03-23 16:07:19
+  text: Work
+  lft: "8"
+  record_sts: ACTV
+  id: "11"
+  description: Complete Document JSH interactios
+  fprint: 
+  user_id: "3"
+  parent_id: "7"
+  rgt: "9"
+  created_at: 2009-03-23 16:07:19

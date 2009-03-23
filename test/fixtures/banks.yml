@@ -1,17 +1,16 @@
-one:
-  id: 1
-  name: 'LEUMI'
-  branch: '875'
-  address: 'Yad Haruzim 23'
-  city: 'Ramat-Aviv'
-  country: 'Israel'
-  phone: '972-3-98765432'
-  fax: '972-3-98765432'
-  email: 'admin@leumi.co.il'
-  url: 'http://www.leumi.co.il'
-  conn_person: 'Adam Levi'
-  businessdate: '2008-05-28'
-  last_update: 2008-05-27 16:03:18
-
-# two:
-#   column: value
+--- 
+banks_001: 
+  name: Leumi
+  city: Haifa
+  last_update: 
+  country: Israel
+  url: www.leumi.co.il
+  record_sts: ACTV
+  id: "1"
+  branch: "875"
+  phone: 972-48-765432
+  fax: 972-48-765432
+  businessdate: 03-22-2009
+  conn_person: Yuval regev
+  address: technion
+  email: leumi_875@leumi.co.il

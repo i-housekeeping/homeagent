@@ -5,7 +5,7 @@ class CreateTasklists < ActiveRecord::Migration
       t.integer   "lft"
       t.integer   "rgt"
       t.string    "text" #list Name
-      t.integer   "user_id"
+      t.integer   "user_id",      :limit => 10
       t.string    "description"
       t.string    "record_sts",   :limit => 4,  :default => "ACTV"
       t.timestamp "last_update" 

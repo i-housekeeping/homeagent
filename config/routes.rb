@@ -1,26 +1,18 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :tasklists, :collection => {:wizard=>:get}
+  map.resources :collaborates
 
-  map.resources :tasks, :collection => {:update_remote=>:get,
+  map.resources :notes
+
+  map.resources :tasklists, :collection => {:wizard=>:get,
+                                            :index_remote=>:get,
+                                            :update_remote=>:get,
+                                            :destroy_remote=>:get,
+                                            :create_remote=>:get}
+
+  map.resources :tasks, :collection => {:index_remote=>:get,
+                                        :update_remote=>:get,
                                         :destroy_remote=>:get,
-                                        :create_remote=>:get}
-
-  map.resources :schedullers , :has_many => :triggers ,
-                               :collection => {:workflow=>:get}
-  map.resources :notifications
-
-  map.resources :reports
-
-  map.resources :alerts, :collection => {:wizard=>:get}
-
-  map.resources :stories
-
-  map.resources :categories,  :has_many => :cashrecords, 
-                              :collection => {:graph_report=>:get,
-                                              :wizard=>:get,
-                                              :stories=>:get,
-                                              :upload=>:post,
-                                              :progress=>:post}
+                                        :create_remote=>:get }
 
   map.resources :cashrecords, :collection => {:grid_data=>:get, 
                                               :list=>:get, 
@@ -29,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
                                               :upload=>:post,
                                               :progress=>:post}
 
-  map.resources :customers, :has_many => [:accounts, :cashrecords], 
+  map.resources :contacts, :has_many => [:accounts, :cashrecords], 
                             :collection => {:loadtable=>:get, 
                                             :sendmail=>:get, 
                                             :comapanies_list=>:get, 

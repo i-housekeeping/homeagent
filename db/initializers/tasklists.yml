@@ -1,79 +1,20 @@
---- 
-tasklists_006: 
-  last_update: 
-  updated_at: 2009-03-18 11:05:14
-  text: Reminders
-  lft: "9"
-  record_sts: ACTV
-  id: "12"
-  description: Call or send
-  fprint: 
-  user_id: "3" 
-  parent_id: "8"
-  rgt: "10"
-  created_at: 2009-03-18 11:05:14
-tasklists_001: 
-  last_update: 
-  updated_at: 2009-03-18 11:05:13
-  text: Todo Lists
-  lft: "1"
-  record_sts: ACTV
-  id: "7"
-  description: What to todo in i.housekeeping
-  fprint: 
-  user_id: "3" 
-  parent_id: 
-  rgt: "12"
-  created_at: 2009-03-18 11:05:13
-tasklists_002: 
-  last_update: 
-  updated_at: 2009-03-18 11:05:14
-  text: Family
-  lft: "2"
-  record_sts: ACTV
-  id: "8"
-  description: Regular family tasks
-  fprint: 
-  user_id: "3" 
-  parent_id: "7"
-  rgt: "11"
-  created_at: 2009-03-18 11:05:13
-tasklists_003: 
-  last_update: 
-  updated_at: 2009-03-18 11:05:14
-  text: Supermarket
-  lft: "3"
-  record_sts: ACTV
-  id: "9"
-  description: Supermarket shopping
-  fprint: 
-  user_id: "3" 
-  parent_id: "8"
-  rgt: "4"
-  created_at: 2009-03-18 11:05:13
-tasklists_004: 
-  last_update: 
-  updated_at: 2009-03-18 11:05:14
-  text: Market
-  lft: "5"
-  record_sts: ACTV
-  id: "10"
-  description: Fruits and Vegetables
-  fprint: 
-  user_id: "3" 
-  parent_id: "8"
-  rgt: "6"
-  created_at: 2009-03-18 11:05:14
-tasklists_005: 
-  last_update: 
-  updated_at: 2009-03-18 11:05:14
-  text: Orders
-  lft: "7"
-  record_sts: ACTV
-  id: "11"
-  description: Food and other stuff
-  fprint: 
-  user_id: "3" 
-  parent_id: "8"
-  rgt: "8"
-  created_at: 2009-03-18 11:05:14
+aroot_aroot:
+  text: 'To-do List'
+  description: 'To-do List'
+  user_id : "3"
+aroot_child1:
+  text: 'Family'
+  description: 'Family'
+  user_id : "3"
+child1_child11:
+  text: 'Supermarket'
+  description: 'Supermarket'
+  user_id : "3"
+child1_child12:
+  text: 'Buy TV'
+  description: 'Buy TV'
+  user_id : "3"
+aroot_child2:
+  text: 'Work'
+  description: 'Complete Document JSH interactios'
+  user_id : "3"
