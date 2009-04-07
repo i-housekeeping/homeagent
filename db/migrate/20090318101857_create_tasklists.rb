@@ -4,9 +4,11 @@ class CreateTasklists < ActiveRecord::Migration
       t.integer   "parent_id"
       t.integer   "lft"
       t.integer   "rgt"
-      t.string    "text" #list Name
+      t.string    "listId" 
+      t.string    "listName" 
       t.integer   "user_id",      :limit => 10
       t.string    "description"
+      t.boolean   "isFolder"
       t.string    "record_sts",   :limit => 4,  :default => "ACTV"
       t.timestamp "last_update" 
       t.string    "fprint"

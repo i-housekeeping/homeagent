@@ -1,9 +1,15 @@
 class Tasklist < ActiveRecord::Base
   has_and_belongs_to_many :tasks
   belongs_to :user
-  has_many :notes, :as=>:notable
+  
   
   acts_as_nested_set :scope => "record_sts='ACTV'"
+  
+ 
+  after_destroy do
+    #Task.find(:all, :uniq => true, :joins => :rights,
+    #          :conditions => 'tasklist.id is NULL').each(&:destroy)
+  end
   
   def self.root_nodes
     find(:all, :conditions => "parent_id IS NULL and record_sts='ACTV'")

@@ -1,20 +1,30 @@
 aroot_aroot:
-  text: 'To-do List'
+  listName: 'To-do List'
   description: 'To-do List'
   user_id : "3"
+  isFolder : true
+  record_sts : "ACTV"
 aroot_child1:
-  text: 'Family'
+  listName: 'Family'
   description: 'Family'
   user_id : "3"
+  isFolder : true
+  record_sts : "ACTV"
 child1_child11:
-  text: 'Supermarket'
+  listName: 'Supermarket'
   description: 'Supermarket'
   user_id : "3"
+  isFolder : false
+  record_sts : "ACTV"
 child1_child12:
-  text: 'Buy TV'
+  listName: 'Buy TV'
   description: 'Buy TV'
   user_id : "3"
+  isFolder : false
+  record_sts : "ACTV"
 aroot_child2:
-  text: 'Work'
+  listName: 'Work'
   description: 'Complete Document JSH interactios'
   user_id : "3"
+  isFolder : false
+  record_sts : "ACTV"

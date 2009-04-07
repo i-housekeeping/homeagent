@@ -7,14 +7,19 @@ ActionController::Routing::Routes.draw do |map|
                                             :index_remote=>:get,
                                             :update_remote=>:get,
                                             :destroy_remote=>:get,
-                                            :create_remote=>:get}
+                                            :create_remote=>:get, 
+                                            :postdirectory=>:get, 
+                                            :adoptdirectory=>:get,
+                                            :tasklists_sharelist => :get,
+                                            :cleandirectory => :get}
 
   map.resources :tasks, :collection => {:index_remote=>:get,
                                         :update_remote=>:get,
                                         :destroy_remote=>:get,
-                                        :create_remote=>:get }
+                                        :create_remote=>:get}
 
-  map.resources :cashrecords, :collection => {:grid_data=>:get, 
+  map.resources :cashrecords, :collection => {:wizard=>:get,
+                                              :grid_data=>:get, 
                                               :list=>:get, 
                                               :user_histories=>:get, 
                                               :history=> :get,
