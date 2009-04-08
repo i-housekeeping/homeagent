@@ -2,98 +2,7 @@ class CashrecordsController < ApplicationController
   #before_filter :login_required
   
   protect_from_forgery :only => [:create, :destroy]
-  
-  
-  # GET /cashrecords
-  # GET /cashrecords.xml
-  def index
-    @cashrecords = Cashrecord.find(:all)
     
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @cashrecords }
-      format.json { render :json => @cashrecords}
-    end
-  end
-  
-  # GET /cashrecords/1
-  # GET /cashrecords/1.xml
-  def show
-    @cashrecord = Cashrecord.find(params[:id])
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @cashrecord }
-    end
-  end
-  
-  # GET /cashrecords/new
-  # GET /cashrecords/new.xml
-  def new
-    @cashrecord = Cashrecord.new
-    
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @cashrecord }
-    end
-  end
-  
-  # GET /cashrecords/1/edit
-  def edit
-    @cashrecord = Cashrecord.find(params[:id])
-  end
-  
-  # POST /cashrecords
-  # POST /cashrecords.xml
-  def create
-    set_cashrecords_params params
-  
-   (1..params[:numpayments].to_i).collect do |num|
-        set_repetetive_values params, num
-        @cashrecord = Cashrecord.new(params[:cashrecord])
-          
-        if @cashrecord.save  
-          update_current_balance params
-          Note.new().create_cashstory(@cashrecord, current_user)
-        end
-    end
-   
-    respond_to do |format|
-      format.html { render :text=>"{success:true,
-                                    notice:'Cashrecord was successfully created.'}", :layout=>false }
-      format.xml  { render :xml => @cashrecord, :status => :created, :location => @cashrecord }            
-    end
-  end
-  
-  # PUT /cashrecords/1
-  # PUT /cashrecords/1.xml
-  def update
-    @cashrecord = Cashrecord.find(params[:id])
-    
-    respond_to do |format|
-      if @cashrecord.update_attributes(params[:cashrecord])
-        flash[:notice] = 'Cashrecord was successfully updated.'
-        format.html { redirect_to(@cashrecord) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @cashrecord.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-  
-  # DELETE /cashrecords/1
-  # DELETE /cashrecords/1.xml
-  def destroy
-    @cashrecord = Cashrecord.find(params[:id])
-    @cashrecord.destroy
-    
-    respond_to do |format|
-      format.html { redirect_to(cashrecords_url) }
-      format.xml  { head :ok }
-    end
-  end
-  
   def upload
       file = params[params[:input_id]].read
       file_name = params[params[:input_id]].original_filename
@@ -395,59 +304,95 @@ class CashrecordsController < ApplicationController
     ("%.2f" % amount).to_f
   end
   
-    # instance methods for cross-domain remote calls
-  # GET /tasks/index_remote
-  def index_remote
-    all_tasks = Array.new
-    if params[:tasklist_id].nil? 
-      all_tasks = Task.find(:all) 
-    else
-       tasklist = Tasklist.find(:first, :conditions=>"listId='#{params[:tasklist_id]}'").full_set
-       tasklist.each{|list| 
-                        unless list.tasks.empty?
-                          list.tasks.each{|task| all_tasks << task }  
-                        end } 
-    end
- 
-   
-   task_list = all_tasks.map {|task| 
-                 {
-                  :taskId => task.taskId,
-                  :title => task.title,
-                  :description => task.description,
-                  :dueDate => task.dueDate, 
-                  :completed => task.completed,
-                  :reminder => task.reminder,
-                  :completedDate => task.completedDate,
-                  :listId =>task.tasklists[0].id.to_s
-                 } 
-          } 
-          
-    @tasks_hash = Hash.new
-    @tasks_hash[:Tasks] = task_list   
-    @tasks_hash[:Total] = task_list.size
-
+  # -- BATCHES
+  def postdirectory
+    
+    cashrecords_hash(params)
+    params[:folder_name]=String.new("cashrecords")
+    params[:file_name]=String.new("cashrecords")
+    post_directory(params){@cashrecords_hash.to_yaml}
+    
     respond_to do |format|
-      format.js { render :js => "#{params[:jsoncallback]}(#{task_list.to_json()});" }
-      format.chr {render :chr=>@tasks_hash}
-      format.jsonc {render :jsonc=>@tasks_hash}
+      format.html { 
+        render :text=>"{success:true,
+                        notice:'Cashrecords directory posted sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
     end
   end
   
-  # GET /tasks/create_remote
+  def adoptdirectory
+   
+    cashrecords = YAML::load(File.open("#{RAILS_ROOT}/db/shared/cashrecords/cashrecords.yml" ))
+    cashrecords[:Cashrecords].each do |item| 
+      inject_cashrecords (item) 
+     end
+    
+    respond_to do |format|
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Cashrecords directory adopted sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
+    end
+  end
+  
+  def cleandirectory
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PUBLIC')
+      Dir.chdir("#{RAILS_ROOT}/db/shared/cashrecords")
+      FileUtils.rm Dir.glob("cashrecords.yml")
+    #end
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PRIVATE')
+    #  Dir.chdir("#{RAILS_ROOT}/db/shared/customers")
+    #  FileUtils.rm Dir.glob("#{session[:company].customer_name}*.yml") 
+    #end
+    
+    respond_to do |format|
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Cashrecords directory cleaned sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
+    end
+  end
+  
+  def cashrecords_sharelist
+    cashrecords_list = Array.new
+    FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/cashrecords")
+    Dir.foreach("#{RAILS_ROOT}/db/shared/cashrecords") { |x| cashrecords_list.push({:name => x.sub(/.yml/,'')}) if (x != '.' and x != '..') }
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => cashrecords_list.to_xml }
+      format.json { render :json => cashrecords_list.to_json}
+    end
+  end
+  
+  # --  INDIVIDUAL
+  # instance methods for cross-domain remote calls
+  # GET /cashrecords/index_remote
+  def index_remote
+   
+    cashrecords_hash(params)
+  
+    respond_to do |format|
+      format.js { render :js => "#{params[:jsoncallback]}(#{cashrecord_list.to_json()});" }
+      format.chr {render :chr=>@cashrecords_hash}
+      format.jsonc {render :jsonc=>@cashrecords_hash}
+    end
+  end
+  
+  # GET /cashrecords/create_remote
   def create_remote
     @reply_remote = Hash.new()
     
-    unless params[:task].nil?
-        task = ActiveSupport::JSON.decode(params[:task]).rehash
-        logger.warn "decoded task from client#{task["dueDate"]}"
-        tasklist = Tasklist.find(:first, :conditions=>"listId = '#{task["listId"]}'")
-        task.delete("listId")
-        @task = Task.new(task)
-        @task.save 
-        tasklist.tasks << @task
+    unless params[:cashrecord].nil?
+        cashrecord = ActiveSupport::JSON.decode(params[:cashrecord]).rehash
+        inject_cashrecord(cashrecord)
         @reply_remote[:success]= true
-        @reply_remote[:notice] = 'Task was successfully created.'
+        @reply_remote[:notice] = 'Cashrecord was successfully created.'
     else
        @reply_remote[:success]= false
     end
@@ -459,18 +404,16 @@ class CashrecordsController < ApplicationController
     end
   end
   
-  # GET /tasks/update_remote/1
+  # GET /cashrecords/update_remote/1
   def update_remote
     @reply_remote = Hash.new()
     
-    unless params[:task].nil?
-      task = ActiveSupport::JSON.decode(params[:task]).rehash
-      @task = Task.find(:first , :conditions=>"taskId = '#{task["taskId"]}'")
-      @task.tasklists << Tasklist.find(task["listId"])
-      task.delete("listId")
-      @task.update_attributes(task)
+    unless params[:cashrecord].nil?
+      cashrecord = ActiveSupport::JSON.decode(params[:cashrecord]).rehash
+      @cashrecord = Cashrecord.find(cashrecord["cashrecordId"])
+      @cashrecord.update_attributes(cashrecord)
       @reply_remote[:success]= true
-      @reply_remote[:notice] = 'Task was successfully updated.'
+      @reply_remote[:notice] = 'Cashrecord was successfully updated.'
    else
        @reply_remote[:success]= false
    end
@@ -482,13 +425,13 @@ class CashrecordsController < ApplicationController
     end
   end
   
-  # GET /tasks/destroy_remote/1
+  # GET /cashrecords/destroy_remote/1
   def destroy_remote
-    @task = Task.find(:first , :conditions=>"taskId = '#{params[:id]}'")
+    @cashrecord = Cashrecord.find(params[:cashrecordId])
     @reply_remote = Hash.new()
     
-    unless @task.nil?
-       @task.destroy
+    unless @cashrecord.nil?
+       @cashrecord.destroy
        @reply_remote[:success]= true
     else
        @reply_remote[:success]= false
@@ -500,4 +443,49 @@ class CashrecordsController < ApplicationController
       format.jsonc { render :jsonc=> @reply_remote  }
     end
   end
+  
+  private
+  
+  def cashrecords_hash (params)
+    if params[:cashrecordId].nil?
+    @cashrecords ||= Cashrecord.find(:all)
+   else
+    @cashrecords ||= Cashrecord.find(params[:cashrecordId])
+   end
+    cashrecords_list = @cashrecords.map {|cashrecord| 
+                 {
+                    :cashrecordId=>cashrecord.id,
+                    :user_id=>cookies[:current_user_id], 
+                    :task_id=>cashrecord.task.id, 
+                    :cashrec_type=>cashrecord.cashrec_type,
+                    :reference=>cashrecord.reference,
+                    :dr_account_id=>cashrecord.dr_account_id,
+                    :debit_amount=>cashrecord.debit_amount,
+                    :dr_value_date=>cashrecord.dr_value_date,
+                    :cr_account_id=>cashrecord.cr_account_id,
+                    :credit_amount=>cashrecord.credit_amount,
+                    :cr_value_date=>cashrecord.cr_value_date,
+                    :original_balance=>cashrecord.original_balance,    
+                    :repetitive_type=>cashrecord.repetitive_type,
+                    :record_sequence=>cashrecord.record_sequence,
+                    :total_records=>cashrecord.total_records,
+                    :repetitive_amount=>cashrecord.repetitive_amount,
+                    :starting_date=>cashrecord.starting_date,
+                    :details=>cashrecord.details
+                  }
+          }
+          
+    @cashrecords_hash = Hash.new
+    @cashrecords_hash[:Cashrecords] = cashrecords_list   
+    @cashrecords_hash[:Total] = cashrecords_list.size
+  end
+  
+  def inject_cashrecords (cashrecord)
+       #if required the filtr should be here 
+      cashrecord.delete(:cashrecordId)
+       # ToDo check if record already exists
+      Cashrecord.create(cashrecord)
+  end
+  
+  
 end

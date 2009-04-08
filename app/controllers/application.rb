@@ -13,4 +13,26 @@ class ApplicationController < ActionController::Base
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
+  
+  def post_directory(params)
+    
+    #if(params[:share].eql? "true")
+      #Posted on Bloney Cashflow site  everybody could see it
+      FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/#{params[:folder_name]}")
+      File.open("#{RAILS_ROOT}/db/shared/#{params[:folder_name]}/#{params[:file_name]}.yml", 'w') { |f| f.write(yield) }
+    #else
+      #Posted on company site soe everybody could see it
+      #key = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{session[:company].customer_name}--")
+      
+      #FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/customers")
+      #File.open("#{RAILS_ROOT}/db/shared/customers/#{session[:company].customer_name}_#{key}.yml", 'w') {|f| f.write(customers.to_yaml) }
+      
+      #params[:from] = "admin@bloney.co.cc"
+      #params[:to_company] = Customer.find(:first,:conditions=>"customer_name='#{params[:expert_name]}'")[:email]
+      #params[:subject] = "Customers Directory"
+      #params[:email_editor] = "#{session[:company].customer_name} customers directory is available for your usage. Activation key is :#{key} "
+      #UserNotifier.deliver_customeremail(params)
+    #end
+    
+  end
 end

@@ -1,53 +1,17 @@
 class TasklistsController < ApplicationController
    
-  def wizard
-    return false unless Tasklist.find(:first).nil?
-    
-    tasklists = YAML::load(File.open("#{RAILS_ROOT}/db/initializers/tasklists.yml" ))
-    
-    tasklists.sort_by{|key , value| key[/_[0-9A-Za-z]+/] }.each do |k,v|    
-      v[:parent_id] = k[0..k.index("_")-1]
-      v[:listId] = k[k.rindex("_")+1..k.size]
-      new_tasklist =Tasklist.new(v)
-      #Story.new().create_story(v[:categories], current_user)
-       if k != "aroot_aroot" 
-            Tasklist.find(:first, :conditions=>"listId = '#{v[:parent_id]}'").add_child(new_tasklist)
-       else
-        new_tasklist[:parent_id] = 0
-        new_tasklist.save
-       end       
-      end
-      
-      render :action=>"index", :layout=>false
-  end
-  
+  # -- BATCHES
   def postdirectory
     
     tasklists_hash(params)
-    @tasklists_hash[:Tasklists].each{|item|}  
-    
-    #if(params[:share].eql? "true")
-      #Posted on Bloney Cashflow site  everybody could see it
-      FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/tasklists")
-      File.open("#{RAILS_ROOT}/db/shared/tasklists/test.yml", 'w') {|f| f.write(@tasklists_hash.to_yaml) }
-    #else
-      #Posted on company site soe everybody could see it
-      #key = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{session[:company].customer_name}--")
-      
-      #FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/customers")
-      #File.open("#{RAILS_ROOT}/db/shared/customers/#{session[:company].customer_name}_#{key}.yml", 'w') {|f| f.write(customers.to_yaml) }
-      
-      #params[:from] = "admin@bloney.co.cc"
-      #params[:to_company] = Customer.find(:first,:conditions=>"customer_name='#{params[:expert_name]}'")[:email]
-      #params[:subject] = "Customers Directory"
-      #params[:email_editor] = "#{session[:company].customer_name} customers directory is available for your usage. Activation key is :#{key} "
-      #UserNotifier.deliver_customeremail(params)
-    #end
+    params[:folder_name]=String.new("tasklists")
+    params[:file_name]=String.new("tasklists")
+    post_directory(params){@tasklists_hash.to_yaml}
     
     respond_to do |format|
       format.html { 
         render :text=>"{success:true,
-                        notice:'Customers directory posted sucessfully.' }", :layout=>false
+                        notice:'Tasklists directory posted sucessfully.' }", :layout=>false
       }
       format.xml  { head :ok }
     end
@@ -55,7 +19,7 @@ class TasklistsController < ApplicationController
   
   def adoptdirectory
    
-    tasklists = YAML::load(File.open("#{RAILS_ROOT}/db/shared/tasklists/test.yml" ))
+    tasklists = YAML::load(File.open("#{RAILS_ROOT}/db/shared/tasklists/tasklists.yml" ))
     tasklists[:Tasklists].each do |item| 
       inject_tasklist (item) 
       if item[:isFolder] == false
@@ -76,7 +40,7 @@ class TasklistsController < ApplicationController
     respond_to do |format|
       format.html { 
         render :text=>"{success:true,
-                          notice:'Customers directory adopted sucessfully.' }", :layout=>false
+                          notice:'Tasklists directory adopted sucessfully.' }", :layout=>false
       }
       format.xml  { head :ok }
     end
@@ -84,36 +48,38 @@ class TasklistsController < ApplicationController
   
   def cleandirectory
     
-    if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PUBLIC')
-      Dir.chdir("#{RAILS_ROOT}/db/shared/customers")
-      FileUtils.rm Dir.glob("#{session[:company].customer_name}*.yml")
-    end
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PUBLIC')
+      Dir.chdir("#{RAILS_ROOT}/db/shared/tasklists")
+      FileUtils.rm Dir.glob("tasklists.yml")
+    #end
     
-    if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PRIVATE')
-      Dir.chdir("#{RAILS_ROOT}/db/shared/customers")
-      FileUtils.rm Dir.glob("#{session[:company].customer_name}*.yml") 
-    end
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PRIVATE')
+    #  Dir.chdir("#{RAILS_ROOT}/db/shared/customers")
+    #  FileUtils.rm Dir.glob("#{session[:company].customer_name}*.yml") 
+    #end
     
     respond_to do |format|
       format.html { 
         render :text=>"{success:true,
-                          notice:'Customers directory cleaned sucessfully.' }", :layout=>false
+                          notice:'Tasklists directory cleaned sucessfully.' }", :layout=>false
       }
       format.xml  { head :ok }
     end
   end
   
   def tasklists_sharelist
-    companies_list = Array.new
-    FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/customers")
-    Dir.foreach("#{RAILS_ROOT}/db/shared/customers") { |x| companies_list.push({:company_name => x.sub(/.yml/,'')}) if (x != '.' and x != '..') }
+    tasklists_list = Array.new
+    FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/tasklists")
+    Dir.foreach("#{RAILS_ROOT}/db/shared/tasklists") { |x| tasklists_list.push({:listName => x.sub(/.yml/,'')}) if (x != '.' and x != '..') }
     
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => companies_list.to_xml }
-      format.json { render :json => companies_list.to_json}
+      format.xml  { render :xml => tasklists_list.to_xml }
+      format.json { render :json => tasklists_list.to_json}
     end
   end
+  
+  # --  INDIVIDUAL
   # instance methods for cross-domain remote calls
   # GET /tasks/index_remote
   def index_remote()

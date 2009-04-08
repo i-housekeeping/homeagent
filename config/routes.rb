@@ -1,10 +1,23 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :collaborates
+  map.resources :collaborates, :collection => { :index_remote=>:get,
+                                                :update_remote=>:get,
+                                                :destroy_remote=>:get,
+                                                :create_remote=>:get, 
+                                                :postdirectory=>:get, 
+                                                :adoptdirectory=>:get,
+                                                :collaborates_sharelist => :get,
+                                                :cleandirectory => :get}
 
-  map.resources :notes
+  map.resources :notes, :collection => {    :index_remote=>:get,
+                                            :update_remote=>:get,
+                                            :destroy_remote=>:get,
+                                            :create_remote=>:get, 
+                                            :postdirectory=>:get, 
+                                            :adoptdirectory=>:get,
+                                            :notes_sharelist => :get,
+                                            :cleandirectory => :get}
 
-  map.resources :tasklists, :collection => {:wizard=>:get,
-                                            :index_remote=>:get,
+  map.resources :tasklists, :collection => {:index_remote=>:get,
                                             :update_remote=>:get,
                                             :destroy_remote=>:get,
                                             :create_remote=>:get, 
@@ -16,7 +29,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :tasks, :collection => {:index_remote=>:get,
                                         :update_remote=>:get,
                                         :destroy_remote=>:get,
-                                        :create_remote=>:get}
+                                        :create_remote=>:get, 
+                                        :postdirectory=>:get, 
+                                        :adoptdirectory=>:get,
+                                        :tasks_sharelist => :get,
+                                        :cleandirectory => :get}
 
   map.resources :cashrecords, :collection => {:wizard=>:get,
                                               :grid_data=>:get, 
@@ -24,23 +41,48 @@ ActionController::Routing::Routes.draw do |map|
                                               :user_histories=>:get, 
                                               :history=> :get,
                                               :upload=>:post,
-                                              :progress=>:post}
+                                              :progress=>:post,
+                                              :index_remote=>:get,
+                                              :update_remote=>:get,
+                                              :destroy_remote=>:get,
+                                              :create_remote=>:get, 
+                                              :postdirectory=>:get, 
+                                              :adoptdirectory=>:get,
+                                              :cashrecords_sharelist => :get,
+                                              :cleandirectory => :get}
 
   map.resources :contacts, :has_many => [:accounts, :cashrecords], 
-                            :collection => {:loadtable=>:get, 
-                                            :sendmail=>:get, 
-                                            :comapanies_list=>:get, 
-                                            :postdirectory=>:get, 
-                                            :adoptdirectory=>:get,
-                                            :comapanies_sharelist => :get,
-                                            :cleandirectory => :get}
+                                        :collection => {:loadtable=>:get, 
+                                                        :sendmail=>:get, 
+                                                        :comapanies_list=>:get, 
+                                                        :index_remote=>:get,
+                                                        :update_remote=>:get,
+                                                        :destroy_remote=>:get,
+                                                        :create_remote=>:get, 
+                                                        :postdirectory=>:get, 
+                                                        :adoptdirectory=>:get,
+                                                        :contacts_sharelist => :get,
+                                                        :cleandirectory => :get}
 
   map.resources :accounts, :has_many => :cashrecords,  
-                           :collection => { :index_tree => :get, 
-                                            :virtual_tree=>:get,
-                                            :stories=>:get}
+                                    :collection => {    :index_remote=>:get,
+                                                        :update_remote=>:get,
+                                                        :destroy_remote=>:get,
+                                                        :create_remote=>:get, 
+                                                        :postdirectory=>:get, 
+                                                        :adoptdirectory=>:get,
+                                                        :accounts_sharelist => :get,
+                                                        :cleandirectory => :get}
 
-  map.resources :banks, :has_many => :accounts
+  map.resources :banks, :has_many => :accounts,
+                                    :collection => {    :index_remote=>:get,
+                                                        :update_remote=>:get,
+                                                        :destroy_remote=>:get,
+                                                        :create_remote=>:get, 
+                                                        :postdirectory=>:get, 
+                                                        :adoptdirectory=>:get,
+                                                        :banks_sharelist => :get,
+                                                        :cleandirectory => :get}
   
   # The priority is based upon order of creation: first created -> highest priority.
 

@@ -1,147 +1,100 @@
 class BanksController < ApplicationController
   #before_filter :login_required
   
-  protect_from_forgery :only => [:create, :destroy]
+  #protect_from_forgery :only => [:create, :destroy]
   
   #access_control :DEFAULT => 'guest|admin|moderator'
   
-  # GET /banks
-  # GET /banks.xml
-  def index
-    @banks = Bank.find(:all)
-
+  
+  # -- BATCHES
+  def postdirectory
+    
+    banks_hash(params)
+    params[:folder_name]=String.new("banks")
+    params[:file_name]=String.new("banks")
+    post_directory(params){@banks_hash.to_yaml}
+    
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @banks }
-    end
-  end
-
-  # GET /banks/1
-  # GET /banks/1.xml
-  def show
-    @bank = Bank.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @bank }
-    end
-  end
-
-  # GET /banks/new
-  # GET /banks/new.xml
-  def new
-    @bank = Bank.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @bank }
-    end
-  end
-
-  # GET /banks/1/edit
-  def edit
-    @bank = Bank.find(params[:id])
-  end
-
-  # POST /banks
-  # POST /banks.xml
-  def create
-    @bank = Bank.new(params[:bank])
-
-    respond_to do |format|
-      if @bank.save
-        flash[:notice] = 'Bank was successfully created.'
-        format.html { redirect_to(@bank) }
-        format.xml  { render :xml => @bank, :status => :created, :location => @bank }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @bank.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /banks/1
-  # PUT /banks/1.xml
-  def update
-    @bank = Bank.find(params[:id])
-
-    respond_to do |format|
-      if @bank.update_attributes(params[:bank])
-        flash[:notice] = 'Bank was successfully updated.'
-        format.html { redirect_to(@bank) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @bank.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /banks/1
-  # DELETE /banks/1.xml
-  def destroy
-    @bank = Bank.find(params[:id])
-    @bank.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(banks_url) }
+      format.html { 
+        render :text=>"{success:true,
+                        notice:'Banks directory posted sucessfully.' }", :layout=>false
+      }
       format.xml  { head :ok }
     end
   end
   
-    # instance methods for cross-domain remote calls
-  # GET /tasks/index_remote
-  def index_remote
-    all_tasks = Array.new
-    if params[:tasklist_id].nil? 
-      all_tasks = Task.find(:all) 
-    else
-       tasklist = Tasklist.find(:first, :conditions=>"listId='#{params[:tasklist_id]}'").full_set
-       tasklist.each{|list| 
-                        unless list.tasks.empty?
-                          list.tasks.each{|task| all_tasks << task }  
-                        end } 
-    end
- 
+  def adoptdirectory
    
-   task_list = all_tasks.map {|task| 
-                 {
-                  :taskId => task.taskId,
-                  :title => task.title,
-                  :description => task.description,
-                  :dueDate => task.dueDate, 
-                  :completed => task.completed,
-                  :reminder => task.reminder,
-                  :completedDate => task.completedDate,
-                  :listId =>task.tasklists[0].id.to_s
-                 } 
-          } 
-          
-    @tasks_hash = Hash.new
-    @tasks_hash[:Tasks] = task_list   
-    @tasks_hash[:Total] = task_list.size
-
+    banks = YAML::load(File.open("#{RAILS_ROOT}/db/shared/banks/banks.yml" ))
+    banks[:Banks].each do |item| 
+      inject_banks (item) 
+     end
+    
     respond_to do |format|
-      format.js { render :js => "#{params[:jsoncallback]}(#{task_list.to_json()});" }
-      format.chr {render :chr=>@tasks_hash}
-      format.jsonc {render :jsonc=>@tasks_hash}
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Banks directory adopted sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
     end
   end
   
-  # GET /tasks/create_remote
+  def cleandirectory
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PUBLIC')
+      Dir.chdir("#{RAILS_ROOT}/db/shared/banks")
+      FileUtils.rm Dir.glob("banks.yml")
+    #end
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PRIVATE')
+    #  Dir.chdir("#{RAILS_ROOT}/db/shared/customers")
+    #  FileUtils.rm Dir.glob("#{session[:company].customer_name}*.yml") 
+    #end
+    
+    respond_to do |format|
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Banks directory cleaned sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
+    end
+  end
+  
+  def banks_sharelist
+    banks_list = Array.new
+    FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/banks")
+    Dir.foreach("#{RAILS_ROOT}/db/shared/banks") { |x| banks_list.push({:name => x.sub(/.yml/,'')}) if (x != '.' and x != '..') }
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => banks_list.to_xml }
+      format.json { render :json => banks_list.to_json}
+    end
+  end
+  
+  # --  INDIVIDUAL
+  # instance methods for cross-domain remote calls
+  # GET /banks/index_remote
+  def index_remote
+    
+    banks_hash(params)
+
+    respond_to do |format|
+      format.js { render :js => "#{params[:jsoncallback]}(#{bank_list.to_json()});" }
+      format.chr {render :chr=>@banks_hash}
+      format.jsonc {render :jsonc=>@banks_hash}
+    end
+  end
+  
+  # GET /banks/create_remote
   def create_remote
     @reply_remote = Hash.new()
     
-    unless params[:task].nil?
-        task = ActiveSupport::JSON.decode(params[:task]).rehash
-        logger.warn "decoded task from client#{task["dueDate"]}"
-        tasklist = Tasklist.find(:first, :conditions=>"listId = '#{task["listId"]}'")
-        task.delete("listId")
-        @task = Task.new(task)
-        @task.save 
-        tasklist.tasks << @task
+    unless params[:bank].nil?
+        bank = ActiveSupport::JSON.decode(params[:bank]).rehash
+        inject_banks(bank) 
         @reply_remote[:success]= true
-        @reply_remote[:notice] = 'Task was successfully created.'
+        @reply_remote[:notice] = 'bank was successfully created.'
     else
        @reply_remote[:success]= false
     end
@@ -153,18 +106,16 @@ class BanksController < ApplicationController
     end
   end
   
-  # GET /tasks/update_remote/1
+  # GET /banks/update_remote/1
   def update_remote
     @reply_remote = Hash.new()
     
-    unless params[:task].nil?
-      task = ActiveSupport::JSON.decode(params[:task]).rehash
-      @task = Task.find(:first , :conditions=>"taskId = '#{task["taskId"]}'")
-      @task.tasklists << Tasklist.find(task["listId"])
-      task.delete("listId")
-      @task.update_attributes(task)
+    unless params[:bank].nil?
+      bank = ActiveSupport::JSON.decode(params[:bank]).rehash
+      @bank = bank.find(bank["bankId"])
+      @bank.update_attributes(bank)
       @reply_remote[:success]= true
-      @reply_remote[:notice] = 'Task was successfully updated.'
+      @reply_remote[:notice] = 'bank was successfully updated.'
    else
        @reply_remote[:success]= false
    end
@@ -176,13 +127,13 @@ class BanksController < ApplicationController
     end
   end
   
-  # GET /tasks/destroy_remote/1
+  # GET /banks/destroy_remote/1
   def destroy_remote
-    @task = Task.find(:first , :conditions=>"taskId = '#{params[:id]}'")
+    @bank = Bank.find(params[:bankId])
     @reply_remote = Hash.new()
     
-    unless @task.nil?
-       @task.destroy
+    unless @bank.nil?
+       @bank.destroy
        @reply_remote[:success]= true
     else
        @reply_remote[:success]= false
@@ -193,5 +144,42 @@ class BanksController < ApplicationController
       format.chr {render :chr=> @reply_remote}
       format.jsonc { render :jsonc=> @reply_remote  }
     end
+  end
+  
+ private
+  
+  def banks_hash (params)
+    if params[:bankId].nil?
+    @banks ||= Bank.find(:all)
+   else
+    @banks ||= Bank.find(params[:bankId])
+   end
+    banks_list = @banks.map {|bank| 
+                 {
+                  :bankId=>bank.id,
+                  :name=>bank.name ,
+                  :branch=>bank.branch ,
+                  :address=>bank.address ,
+                  :city=>bank.city ,
+                  :country=>bank.country ,
+                  :phone=>bank.phone ,
+                  :fax=>bank.fax ,
+                  :email=>bank.email ,
+                  :url=>bank.url ,
+                  :conn_person=>bank.conn_person ,
+                  :businessdate=>bank.businessdate
+                  }
+          }
+          
+    @banks_hash = Hash.new
+    @banks_hash[:Banks] = banks_list   
+    @banks_hash[:Total] = banks_list.size
+  end
+  
+  def inject_banks (bank)
+       #if required the filtr should be here 
+       bank.delete(:bankId)
+       # ToDo check if record already exists
+       Bank.create(bank)
   end
 end

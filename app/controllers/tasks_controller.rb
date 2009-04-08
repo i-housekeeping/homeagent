@@ -1,90 +1,73 @@
 class TasksController < ApplicationController
-  # GET /tasks
-  # GET /tasks.xml
-  def index
-    @tasks = Task.find(:all) 
+  
+  
+  # -- BATCHES
+  def postdirectory
+    
+    tasks_hash(params)
+    params[:folder_name]=String.new("tasks")
+    params[:file_name]=String.new("tasks")
+    post_directory(params){@tasks_hash.to_yaml}
     
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @tasks }
-    end
-  end
-
-  # GET /tasks/1
-  # GET /tasks/1.xml
-  def show
-    @task = Task.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @task }
-    end
-  end
-
-  # GET /tasks/new
-  # GET /tasks/new.xml
-  def new
-    @task = Task.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @task }
-    end
-  end
-
-  # GET /tasks/1/edit
-  def edit
-    @task = Task.find(params[:id])
-  end
-
-  # POST /tasks
-  # POST /tasks.xml
-  def create
-    @task = Task.new(params[:task])
-
-    respond_to do |format|
-      if @task.save
-        flash[:notice] = 'Task was successfully created.'
-        format.html { redirect_to(@task) }
-        format.xml  { render :xml => @task, :status => :created, :location => @task }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-  
-  # PUT /tasks/1
-  # PUT /tasks/1.xml
-  def update
-    @task = Task.find(params[:id])
-
-    respond_to do |format|
-      if @task.update_attributes(params[:task])
-        flash[:notice] = 'Task was successfully updated.'
-        format.html { redirect_to(@task) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /tasks/1
-  # DELETE /tasks/1.xml
-  def destroy
-    @task = Task.find(params[:id])
-    @task.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(tasks_url) }
+      format.html { 
+        render :text=>"{success:true,
+                        notice:'Tasks directory posted sucessfully.' }", :layout=>false
+      }
       format.xml  { head :ok }
     end
   end
   
+  def adoptdirectory
+   
+    tasks = YAML::load(File.open("#{RAILS_ROOT}/db/shared/tasks/tasks.yml" ))
+    tasks[:Tasks].each do |item| 
+      inject_tasks (item) 
+     end
+    
+    respond_to do |format|
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Tasks directory adopted sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
+    end
+  end
   
+  def cleandirectory
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PUBLIC')
+      Dir.chdir("#{RAILS_ROOT}/db/shared/tasks")
+      FileUtils.rm Dir.glob("tasks.yml")
+    #end
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PRIVATE')
+    #  Dir.chdir("#{RAILS_ROOT}/db/shared/customers")
+    #  FileUtils.rm Dir.glob("#{session[:company].customer_name}*.yml") 
+    #end
+    
+    respond_to do |format|
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Tasks directory cleaned sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
+    end
+  end
   
+  def tasks_sharelist
+    tasks_list = Array.new
+    FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/tasks")
+    Dir.foreach("#{RAILS_ROOT}/db/shared/tasks") { |x| tasks_list.push({:name => x.sub(/.yml/,'')}) if (x != '.' and x != '..') }
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => tasks_list.to_xml }
+      format.json { render :json => tasks_list.to_json}
+    end
+  end
+  
+  # --  INDIVIDUAL
   # instance methods for cross-domain remote calls
   # GET /tasks/index_remote
   def index_remote
@@ -194,5 +177,38 @@ class TasksController < ApplicationController
       format.chr {render :chr=> @reply_remote}
       format.jsonc { render :jsonc=> @reply_remote  }
     end
+  end
+  
+  private
+  
+  def tasks_hash (params)
+    if params[:taskId].nil?
+    @tasks ||= Task.find(:all)
+   else
+    @tasks ||= Task.find(params[:taskId])
+   end
+    tasks_list = @tasks.map {|task| 
+                 {
+                  :taskId=>task.taskId,
+                  :title => task.title,
+                  :description => task.description,
+                  :dueDate => task.dueDate, 
+                  :completed => task.completed,
+                  :reminder => task.reminder,
+                  :completedDate => task.completedDate,
+                  :listId =>task.tasklists[0].listId.to_s
+                  }
+          }
+          
+    @tasks_hash = Hash.new
+    @tasks_hash[:Tasks] = tasks_list   
+    @tasks_hash[:Total] = tasks_list.size
+  end
+  
+  def inject_tasks (task)
+       #if required the filtr should be here 
+       task.delete(:taskId)
+       # ToDo check if record already exists
+       Task.create(task)
   end
 end

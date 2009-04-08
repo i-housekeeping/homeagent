@@ -1,141 +1,94 @@
 class CollaboratesController < ApplicationController
-  # GET /collaborates
-  # GET /collaborates.xml
-  def index
-    @collaborates = Collaborate.find(:all)
-
+ 
+  # -- BATCHES
+  def postdirectory
+    
+    collaborates_hash(params)
+    params[:folder_name]=String.new("collaborates")
+    params[:file_name]=String.new("collaborates")
+    post_directory(params){@collaborates_hash.to_yaml}
+    
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @collaborates }
-    end
-  end
-
-  # GET /collaborates/1
-  # GET /collaborates/1.xml
-  def show
-    @collaborate = Collaborate.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @collaborate }
-    end
-  end
-
-  # GET /collaborates/new
-  # GET /collaborates/new.xml
-  def new
-    @collaborate = Collaborate.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @collaborate }
-    end
-  end
-
-  # GET /collaborates/1/edit
-  def edit
-    @collaborate = Collaborate.find(params[:id])
-  end
-
-  # POST /collaborates
-  # POST /collaborates.xml
-  def create
-    @collaborate = Collaborate.new(params[:collaborate])
-
-    respond_to do |format|
-      if @collaborate.save
-        flash[:notice] = 'Collaborate was successfully created.'
-        format.html { redirect_to(@collaborate) }
-        format.xml  { render :xml => @collaborate, :status => :created, :location => @collaborate }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @collaborate.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /collaborates/1
-  # PUT /collaborates/1.xml
-  def update
-    @collaborate = Collaborate.find(params[:id])
-
-    respond_to do |format|
-      if @collaborate.update_attributes(params[:collaborate])
-        flash[:notice] = 'Collaborate was successfully updated.'
-        format.html { redirect_to(@collaborate) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @collaborate.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /collaborates/1
-  # DELETE /collaborates/1.xml
-  def destroy
-    @collaborate = Collaborate.find(params[:id])
-    @collaborate.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(collaborates_url) }
+      format.html { 
+        render :text=>"{success:true,
+                        notice:'Collaborates directory posted sucessfully.' }", :layout=>false
+      }
       format.xml  { head :ok }
     end
   end
   
-    # instance methods for cross-domain remote calls
-  # GET /tasks/index_remote
-  def index_remote
-    all_tasks = Array.new
-    if params[:tasklist_id].nil? 
-      all_tasks = Task.find(:all) 
-    else
-       tasklist = Tasklist.find(:first, :conditions=>"listId='#{params[:tasklist_id]}'").full_set
-       tasklist.each{|list| 
-                        unless list.tasks.empty?
-                          list.tasks.each{|task| all_tasks << task }  
-                        end } 
-    end
- 
+  def adoptdirectory
    
-   task_list = all_tasks.map {|task| 
-                 {
-                  :taskId => task.taskId,
-                  :title => task.title,
-                  :description => task.description,
-                  :dueDate => task.dueDate, 
-                  :completed => task.completed,
-                  :reminder => task.reminder,
-                  :completedDate => task.completedDate,
-                  :listId =>task.tasklists[0].id.to_s
-                 } 
-          } 
-          
-    @tasks_hash = Hash.new
-    @tasks_hash[:Tasks] = task_list   
-    @tasks_hash[:Total] = task_list.size
-
+    collaborates = YAML::load(File.open("#{RAILS_ROOT}/db/shared/collaborates/collaborates.yml" ))
+    collaborates[:Collaborates].each do |item| 
+      inject_collaborates (item) 
+     end
+    
     respond_to do |format|
-      format.js { render :js => "#{params[:jsoncallback]}(#{task_list.to_json()});" }
-      format.chr {render :chr=>@tasks_hash}
-      format.jsonc {render :jsonc=>@tasks_hash}
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Collaborates directory adopted sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
     end
   end
   
-  # GET /tasks/create_remote
+  def cleandirectory
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PUBLIC')
+      Dir.chdir("#{RAILS_ROOT}/db/shared/collaborates")
+      FileUtils.rm Dir.glob("collaborates.yml")
+    #end
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PRIVATE')
+    #  Dir.chdir("#{RAILS_ROOT}/db/shared/customers")
+    #  FileUtils.rm Dir.glob("#{session[:company].customer_name}*.yml") 
+    #end
+    
+    respond_to do |format|
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Collaborates directory cleaned sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
+    end
+  end
+  
+  def collaborates_sharelist
+    collaborates_list = Array.new
+    FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/collaborates")
+    Dir.foreach("#{RAILS_ROOT}/db/shared/collaborates") { |x| collaborates_list.push({:name => x.sub(/.yml/,'')}) if (x != '.' and x != '..') }
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => collaborates_list.to_xml }
+      format.json { render :json => collaborates_list.to_json}
+    end
+  end
+  
+  # --  INDIVIDUAL
+  # instance methods for cross-domain remote calls
+  # GET /collaborates/index_remote
+  def index_remote
+   
+    collaborates_hash(params)
+  
+    respond_to do |format|
+      format.js { render :js => "#{params[:jsoncallback]}(#{collaborate_list.to_json()});" }
+      format.chr {render :chr=>@collaborates_hash}
+      format.jsonc {render :jsonc=>@collaborates_hash}
+    end
+  end
+  
+  # GET /collaborates/create_remote
   def create_remote
     @reply_remote = Hash.new()
     
-    unless params[:task].nil?
-        task = ActiveSupport::JSON.decode(params[:task]).rehash
-        logger.warn "decoded task from client#{task["dueDate"]}"
-        tasklist = Tasklist.find(:first, :conditions=>"listId = '#{task["listId"]}'")
-        task.delete("listId")
-        @task = Task.new(task)
-        @task.save 
-        tasklist.tasks << @task
+    unless params[:collaborate].nil?
+        collaborate = ActiveSupport::JSON.decode(params[:collaborate]).rehash
+        inject_collaborate(collaborate)
         @reply_remote[:success]= true
-        @reply_remote[:notice] = 'Task was successfully created.'
+        @reply_remote[:notice] = 'Collaborate was successfully created.'
     else
        @reply_remote[:success]= false
     end
@@ -147,18 +100,16 @@ class CollaboratesController < ApplicationController
     end
   end
   
-  # GET /tasks/update_remote/1
+  # GET /collaborates/update_remote/1
   def update_remote
     @reply_remote = Hash.new()
     
-    unless params[:task].nil?
-      task = ActiveSupport::JSON.decode(params[:task]).rehash
-      @task = Task.find(:first , :conditions=>"taskId = '#{task["taskId"]}'")
-      @task.tasklists << Tasklist.find(task["listId"])
-      task.delete("listId")
-      @task.update_attributes(task)
+    unless params[:collaborate].nil?
+      collaborate = ActiveSupport::JSON.decode(params[:collaborate]).rehash
+      @collaborate = Collaborate.find(collaborate["collaborateId"])
+      @collaborate.update_attributes(collaborate)
       @reply_remote[:success]= true
-      @reply_remote[:notice] = 'Task was successfully updated.'
+      @reply_remote[:notice] = 'Collaborate was successfully updated.'
    else
        @reply_remote[:success]= false
    end
@@ -170,13 +121,13 @@ class CollaboratesController < ApplicationController
     end
   end
   
-  # GET /tasks/destroy_remote/1
+  # GET /collaborates/destroy_remote/1
   def destroy_remote
-    @task = Task.find(:first , :conditions=>"taskId = '#{params[:id]}'")
+    @collaborate = Collaborate.find(params[:collaborateId])
     @reply_remote = Hash.new()
     
-    unless @task.nil?
-       @task.destroy
+    unless @collaborate.nil?
+       @collaborate.destroy
        @reply_remote[:success]= true
     else
        @reply_remote[:success]= false
@@ -188,4 +139,39 @@ class CollaboratesController < ApplicationController
       format.jsonc { render :jsonc=> @reply_remote  }
     end
   end
+  
+  private
+  
+  def collaborates_hash (params)
+    if params[:collaborateId].nil?
+    @collaborates ||= Collaborate.find(:all)
+   else
+    @collaborates ||= Collaborate.find(params[:collaborateId])
+   end
+    collaborates_list = @collaborates.map {|collaborate| 
+                 {
+                    :collaborateId=>collaborate.id,
+                    :user_id=>cookies[:current_user_id], 
+                    :task_id=>collaborate.task.id, 
+                    :cashrecord_id=>collaborate.cashrecord.id,
+                    :link_to=>collaborate.link_to,
+                    :action_to=>collaborate.action_to,
+                    :auth_type=>collaborate.auth_type,
+                    :login=>collaborate.login,
+                    :password=>collaborate.password
+                  }
+          }
+          
+    @collaborates_hash = Hash.new
+    @collaborates_hash[:Collaborates] = collaborates_list   
+    @collaborates_hash[:Total] = collaborates_list.size
+  end
+  
+  def inject_collaborates (collaborate)
+       #if required the filtr should be here 
+      collaborate.delete(:collaborateId)
+       # ToDo check if record already exists
+      Collaborate.create(collaborate)
+  end
+  
 end

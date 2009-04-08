@@ -34,7 +34,7 @@ class AccountsController < ApplicationController
                        acc[:bank] = Bank.find(acc.bank_id) }  
                        
     accounts.map{|acc| acc[:leaf] = true 
-                      acc[:uiProvider] = 'col'}
+                       acc[:uiProvider] = 'col'}
                        
     account_types = Account.find(:all, :select=>"distinct account_type") 
     
@@ -63,167 +63,97 @@ class AccountsController < ApplicationController
       format.xml  { render :xml => accounts }
       format.json { render :json => accounts}
     end
-  end
+  end 
   
-  # GET /accounts/1
-  # GET /accounts/1.xml
-  def show
-    @account = Account.find(params[:id])
+  # -- BATCHES
+  def postdirectory
+    
+    accounts_hash(params)
+    params[:folder_name]=String.new("accounts")
+    params[:file_name]=String.new("accounts")
+    post_directory(params){@accounts_hash.to_yaml}
     
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @account }
-    end
-  end
-  
-  # GET /accounts/new
-  # GET /accounts/new.xml
-  def new
-    @account = Account.new
-    
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @account }
-    end
-  end
-  
-  # GET /accounts/1/edit
-  def edit
-    @account = Account.find(params[:id])
-  end
-  
-  # POST /accounts
-  # POST /accounts.xml
-  def create
-    set_account_params params
-    @account = Account.new(params[:account])
-    
-    respond_to do |format|
-      if @account.save
-        Note.new().create_story(@account, current_user)
-        format.html { 
-          render :text=>"{success:true,
-                          notice:'Account #{params[:account][:account_no]} was successfully created.'}", :layout=>false
-        }
-        format.xml  { render :xml => @account, :status => :created, :location => @account }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-  
-  # PUT /accounts/1
-  # PUT /accounts/1.xml
-  def update
-    @account = Account.find(params[:account_id])
-    set_account_params params
-    
-    respond_to do |format|
-      if @account.update_attributes(params[:account])
-        Note.new().update_story(@account, current_user,params[:story])
-        format.html { 
-          render :text=>"{success:true,
-                          notice:'Account #{params[:account][:account_no]} was successfully updated.'}", :layout=>false
-        }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-  
-  # DELETE /accounts/1
-  # DELETE /accounts/1.xml
-  def destroy
-    @account = Account.find(params[:account_id])
-    @account.destroy
-    Note.new().delete_story(@account, current_user)
-    
-    respond_to do |format|
-      format.html {  
-        render :text=>"{success:true }", :layout=>false
+      format.html { 
+        render :text=>"{success:true,
+                        notice:'Accounts directory posted sucessfully.' }", :layout=>false
       }
       format.xml  { head :ok }
     end
   end
   
-  def stories
-    return_data = Hash.new()
-    return_data [:data] = Account.find((params[:id].to_i == 0) ? :first : params[:id]).stories 
+  def adoptdirectory
+   
+    accounts = YAML::load(File.open("#{RAILS_ROOT}/db/shared/accounts/accounts.yml" ))
+    accounts[:Accounts].each do |item| 
+      inject_accounts (item) 
+     end
     
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => return_data }
-      format.json { render :json => return_data}
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Accounts directory adopted sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
     end
   end
   
-  def set_account_params (params)
-    params[:account] = {
-      :account_no=>params[:accountnumber],
-      :account_type=>params[:accounttype],
-      :currency=>params[:accountcurrency],
-      :balance=>params[:accountbalance],
-      :credit_limit=>params[:accountcrlimit],
-      :balance_date=>params[:accountbalancedate]
-    }
-  end
-  
-    # instance methods for cross-domain remote calls
-  # GET /tasks/index_remote
-  def index_remote
-    all_tasks = Array.new
-    if params[:tasklist_id].nil? 
-      all_tasks = Task.find(:all) 
-    else
-       tasklist = Tasklist.find(:first, :conditions=>"listId='#{params[:tasklist_id]}'").full_set
-       tasklist.each{|list| 
-                        unless list.tasks.empty?
-                          list.tasks.each{|task| all_tasks << task }  
-                        end } 
-    end
- 
-   
-   task_list = all_tasks.map {|task| 
-                 {
-                  :taskId => task.taskId,
-                  :title => task.title,
-                  :description => task.description,
-                  :dueDate => task.dueDate, 
-                  :completed => task.completed,
-                  :reminder => task.reminder,
-                  :completedDate => task.completedDate,
-                  :listId =>task.tasklists[0].id.to_s
-                 } 
-          } 
-          
-    @tasks_hash = Hash.new
-    @tasks_hash[:Tasks] = task_list   
-    @tasks_hash[:Total] = task_list.size
-
+  def cleandirectory
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PUBLIC')
+      Dir.chdir("#{RAILS_ROOT}/db/shared/accounts")
+      FileUtils.rm Dir.glob("accounts.yml")
+    #end
+    
+    #if (params[:share_type].eql? 'ALL' or params[:share_type].eql? 'PRIVATE')
+    #  Dir.chdir("#{RAILS_ROOT}/db/shared/customers")
+    #  FileUtils.rm Dir.glob("#{session[:company].customer_name}*.yml") 
+    #end
+    
     respond_to do |format|
-      format.js { render :js => "#{params[:jsoncallback]}(#{task_list.to_json()});" }
-      format.chr {render :chr=>@tasks_hash}
-      format.jsonc {render :jsonc=>@tasks_hash}
+      format.html { 
+        render :text=>"{success:true,
+                          notice:'Accounts directory cleaned sucessfully.' }", :layout=>false
+      }
+      format.xml  { head :ok }
     end
   end
   
-  # GET /tasks/create_remote
+  def accounts_sharelist
+    accounts_list = Array.new
+    FileUtils.mkdir_p("#{RAILS_ROOT}/db/shared/accounts")
+    Dir.foreach("#{RAILS_ROOT}/db/shared/accounts") { |x| accounts_list.push({:name => x.sub(/.yml/,'')}) if (x != '.' and x != '..') }
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => accounts_list.to_xml }
+      format.json { render :json => accounts_list.to_json}
+    end
+  end
+  
+  # --  INDIVIDUAL
+  # instance methods for cross-domain remote calls
+  # GET /accounts/index_remote
+  def index_remote
+   
+    accounts_hash(params)
+  
+    respond_to do |format|
+      format.js { render :js => "#{params[:jsoncallback]}(#{account_list.to_json()});" }
+      format.chr {render :chr=>@accounts_hash}
+      format.jsonc {render :jsonc=>@accounts_hash}
+    end
+  end
+  
+  # GET /accounts/create_remote
   def create_remote
     @reply_remote = Hash.new()
     
-    unless params[:task].nil?
-        task = ActiveSupport::JSON.decode(params[:task]).rehash
-        logger.warn "decoded task from client#{task["dueDate"]}"
-        tasklist = Tasklist.find(:first, :conditions=>"listId = '#{task["listId"]}'")
-        task.delete("listId")
-        @task = Task.new(task)
-        @task.save 
-        tasklist.tasks << @task
+    unless params[:account].nil?
+        account = ActiveSupport::JSON.decode(params[:account]).rehash
+        inject_account(account)
         @reply_remote[:success]= true
-        @reply_remote[:notice] = 'Task was successfully created.'
+        @reply_remote[:notice] = 'Account was successfully created.'
     else
        @reply_remote[:success]= false
     end
@@ -235,18 +165,16 @@ class AccountsController < ApplicationController
     end
   end
   
-  # GET /tasks/update_remote/1
+  # GET /accounts/update_remote/1
   def update_remote
     @reply_remote = Hash.new()
     
-    unless params[:task].nil?
-      task = ActiveSupport::JSON.decode(params[:task]).rehash
-      @task = Task.find(:first , :conditions=>"taskId = '#{task["taskId"]}'")
-      @task.tasklists << Tasklist.find(task["listId"])
-      task.delete("listId")
-      @task.update_attributes(task)
+    unless params[:account].nil?
+      account = ActiveSupport::JSON.decode(params[:account]).rehash
+      @account = Account.find(account["accountId"])
+      @account.update_attributes(account)
       @reply_remote[:success]= true
-      @reply_remote[:notice] = 'Task was successfully updated.'
+      @reply_remote[:notice] = 'Account was successfully updated.'
    else
        @reply_remote[:success]= false
    end
@@ -258,13 +186,13 @@ class AccountsController < ApplicationController
     end
   end
   
-  # GET /tasks/destroy_remote/1
+  # GET /accounts/destroy_remote/1
   def destroy_remote
-    @task = Task.find(:first , :conditions=>"taskId = '#{params[:id]}'")
+    @account = Account.find(params[:accountId])
     @reply_remote = Hash.new()
     
-    unless @task.nil?
-       @task.destroy
+    unless @account.nil?
+       @account.destroy
        @reply_remote[:success]= true
     else
        @reply_remote[:success]= false
@@ -275,5 +203,38 @@ class AccountsController < ApplicationController
       format.chr {render :chr=> @reply_remote}
       format.jsonc { render :jsonc=> @reply_remote  }
     end
+  end
+  
+  private
+  
+  def accounts_hash (params)
+    if params[:accountId].nil?
+    @accounts ||= Account.find(:all)
+   else
+    @accounts ||= Account.find(params[:accountId])
+   end
+    accounts_list = @accounts.map {|account| 
+                 {
+                  :accountId=>account.id,
+                  :contact_id=>account.contact.id,
+                  :account_no=>account.account_no,
+                  :account_type=>account.account_type,
+                  :currency=>account.currency,
+                  :balance=>account.balance,
+                  :balance_date=>account.balance_date,
+                  :credit_limit=>account.credit_limit
+                  }
+          }
+          
+    @accounts_hash = Hash.new
+    @accounts_hash[:Accounts] = accounts_list   
+    @accounts_hash[:Total] = accounts_list.size
+  end
+  
+  def inject_accounts (account)
+       #if required the filtr should be here 
+      account.delete(:accountId)
+       # ToDo check if record already exists
+      Account.create(account)
   end
 end
